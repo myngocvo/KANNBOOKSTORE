@@ -1,0 +1,15 @@
+User-Agent: *
+Disallow: /payment
+
+Allow: /OrderDetail-admin/
+Allow: /cart
+Allow: /home
+Allow: /
+Allow: /user
+Allow: /login
+Allow: /category
+Allow: /books
+Allow: /product/
+Allow: /category-product
+
+Sitemap: sitemap.xml

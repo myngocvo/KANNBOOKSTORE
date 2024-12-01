@@ -1,0 +1,278 @@
+.main.user {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 0;
+  margin-left: 8%;
+  margin-right: 8%;
+}
+
+.left-user {
+  width: 25%;
+  padding-right: 20px;
+  border: 0px;
+  box-shadow: none;
+}
+
+.info-user {
+  display: flex;
+  align-items: flex-start;
+  height: auto;
+  margin-bottom: 20px;
+  background-color: #E9EAEE;
+}
+
+.menu-user {
+  background-color: #E9EAEE;
+  /* margin-top: 20px; */
+}
+
+mat-list {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+.img-user {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 20px;
+  margin-top: 8px;
+  width: 90px;
+  height: 90px;
+}
+
+.img-user img {
+  width: 80px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+.name-edit-container {
+
+  padding: 10px;
+  padding-bottom: 0px;
+  padding-left: -10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.edit-button-1 {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.edit-button-1 p {
+  font-size: 12px;
+  margin: 0;
+  /* Xóa margin để tránh khoảng cách thừa */
+}
+
+.user-name {
+  margin-top: 10px;
+  font-size: 18px;
+  justify-content: center;
+}
+
+.edit-button {
+  display: flex;
+  align-items: center;
+  /* căn chỉnh icon và chữ ở giữa theo chiều dọc */
+}
+
+.edit-button mat-icon {
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.mat-card-avatar img {
+  width: 56px;
+  height: auto;
+}
+
+.right-user {
+  width: 75%;
+  border: 0px;
+}
+
+.edit-button-1 {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.edit-button-1 mat-icon {
+  margin-left: 5px;
+  margin-bottom: -5px;
+  font-size: 17px;
+}
+
+.edit-button-1 p {
+  font-size: 12px;
+  margin: 0;
+}
+
+.right-user-1 {
+  width: 100%;
+  border-radius: 5px;
+  background-color: #E9EAEE;
+  margin: 0 40px 0 10px;
+  padding-bottom: 30px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+.menu-icon {
+  margin-right: 15px;
+}
+
+.menu-list {
+  transition: background-color 0.3s;
+  cursor: pointer;
+}
+
+.menu-list.selected {
+  transform: scale(1.1);
+  background-color: #97978D;
+  border-radius: 12px;
+}
+
+
+.menu-list:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+
+.highlighted-title-card {
+  margin-bottom: 10px;
+  background-color: #97978D;
+  border-radius: 5px;
+}
+
+.full-width-input {
+  width: 90%;
+  margin: 0 5%;
+  border-radius: 5px;
+  flex: 1;
+}
+
+.checkbox {
+  margin-left: 40px;
+  margin-bottom: 20px;
+}
+
+.mat-form-field {
+  margin-bottom: 20px;
+}
+
+.save-button {
+  float: right;
+  width: 100px;
+  color: white;
+  background-color: #97978D;
+  z-index: 0;
+}
+
+.info-user,
+.menu-user {
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-profile {
+  padding: 20px 40px;
+}
+
+.content-address {
+  padding: 20px 40px;
+}
+
+.content-ChangePassword {
+  padding: 20px 40px;
+}
+
+.right-user-2 {
+  width: 100%;
+  border-radius: 5px;
+  margin-left: 10px;
+  padding-bottom: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.highlighted-title-order {
+  padding: 15px;
+  margin: 0 5px 0 0;
+  background-color: #97978D;
+  color: #fff;
+  border-radius: 5px;
+}
+
+.content-order {
+  margin: auto;
+  width: 90%;
+  padding: 10px;
+  box-shadow: 0 4px 8px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  background-color: white;
+  font-weight: 400;
+}
+
+.content-order-top,
+.content-order-bottom {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.content-order-top tr>th,
+tr>td {
+  width: 33%;
+  padding: 5px 30px 0;
+  text-align: center;
+}
+
+.content-order-top tr>th:last-child,
+tr>td:last-child {
+  text-align: right;
+}
+.content-order-top tr>th:first-child,
+tr>td:first-child {
+  text-align: left;
+}
+
+.content-order-top img {
+  width: 40%;
+  height: auto;
+  object-fit: cover;
+  padding: 10px 0;
+}
+
+hr {
+  border: 0;
+  border-top: 2px solid black;
+  margin: 20px 0;
+}
+
+
+.total-amount {
+  font-size: 18px;
+  font-weight: bold;
+  color: coral;
+}
+
+.status-payment {
+  font-size: 13px;
+  color: #97978D;
+}
+
+.content-order:not(:last-child) {
+  margin-top: 30px;
+  margin-bottom: 20px;
+}

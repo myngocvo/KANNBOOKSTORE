@@ -1,0 +1,159 @@
+.bookadd {
+    display: flex;
+    height: 100vh;
+    margin: 0;
+}
+
+.form-left {
+    width: 300px;
+    min-height: 100vh;
+    margin-right: 2%;
+    background-color: #e9eaee;
+    padding: 20px;
+    position: sticky;
+    top: 0;
+    flex-shrink: 0;
+    overflow-y: auto;
+}
+
+.form-right {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 2%;
+}
+
+.title {
+    font-size: 26px;
+    font-weight: bold;
+    margin: 10px 0;
+    text-align: center;
+    color: #97978d;
+}
+
+.content {
+    margin-bottom: 20px;
+    background-color: #e9eaee;
+    padding: 20px;
+}
+
+.name-content {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.imgs-add{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: space-around;
+}
+.img-add {
+    margin: 20px 0;
+    width: calc(25% - 20px);
+}
+
+.img-add label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.img-add input[type="file"] {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.bookname-year {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.bookname,
+.publish-year {
+    flex: 1;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+input {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Phần tác giả, thể loại, nhà cung cấp */
+.aut-cate-add {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.aut-cate-add > div {
+    flex: 1;
+}
+
+.group-add {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.group-add button {
+    margin-left: 10px;
+}
+
+mat-select {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+
+.price-quantity-add {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.price-quantity-add > div {
+    flex: 1;
+}
+
+.page-dimension-add {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.page-dimension-add > div {
+    flex: 1;
+}
+
+.description textarea {
+    width: 100%;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.btn-cancel-apply {
+    margin-top: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btn-cancel-apply button {
+    margin-left: 10px;
+}

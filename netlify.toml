@@ -1,0 +1,14 @@
+[build]
+  command = "npm run build:ssr"
+  publish = "dist/WebQuanLyCuaHangSach/browser"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
+
+[functions]
+  directory = "dist/WebQuanLyCuaHangSach/server"
+  
+[[plugins]]
+  package = "@netlify/plugin-angular-universal"

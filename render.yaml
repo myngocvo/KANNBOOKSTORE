@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: WebQuanLyCuaHangSach
+    runtime: node
+    buildCommand: npm run build:ssr
+    startCommand: npm run serve:ssr
+    envVars:
+      - key: NODE_VERSION
+        value: 20.16.0

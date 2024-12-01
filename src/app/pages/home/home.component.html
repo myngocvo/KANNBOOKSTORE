@@ -1,0 +1,54 @@
+<app-header></app-header>
+<div class="main-home container">
+  <div class="Banner-container">
+    <div id="carouselExampleControls" class="carousel-slide" data-bs-ride="carousel">
+      <ngb-carousel *ngIf="images">
+        <!-- Banner slider 1 -->
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[0]" alt="Random first slide" />
+          </div>
+        </ng-template>
+        <!-- Banner slider 2 -->
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[1]" alt="Random second slide" />
+          </div>
+        </ng-template>
+        <!-- Banner slider 3 -->
+        <ng-template ngbSlide>
+          <div class="picsum-img-wrapper">
+            <img [src]="images[2]" alt="Random third slide" />
+          </div>
+        </ng-template>
+      </ngb-carousel>
+    </div>
+    <div class="Banner">
+      <div class="banner-1">
+        <img src="assets/banner/backtoschool.png" alt="backtoschool">
+      </div>
+      <div class="banner-2">
+        <img src="assets/banner/moibuaan.jpg" alt="moibuaan">
+      </div>
+    </div>
+    <div style="clear:both;"></div>
+  </div>
+  <!-- San Pham Noi Bat -->
+  <div class="highlighted-products-section">
+    <mat-card class="highlighted-title-card">
+      <mat-card-content style="font-size: 18px; color: #FFF;font-weight: bold;">SẢN PHẨM NỔI BẬT</mat-card-content>
+    </mat-card>
+    <app-productslist [products]="bookfull" [loadedBooksCount]="loadedBooksCount"
+        [page]="page" (pageChange)="onPageChange($event)"></app-productslist>
+  </div>
+  <app-author-card></app-author-card>
+  <!-- Goi y cho ban -->
+  <div class="highlighted-products-section">
+    <mat-card class="highlighted-title-card">
+      <mat-card-content style="font-size: 18px; color: #FFF;font-weight: bold;">GỢI Ý CHO BẠN</mat-card-content>
+    </mat-card>
+    <app-productslist [products]="booksuggest" [loadedBooksCount]="loadedBooksCount"
+        [page]="page" (pageChange)="onPageChange($event)"></app-productslist>
+  </div>
+</div>
+<app-footer></app-footer>

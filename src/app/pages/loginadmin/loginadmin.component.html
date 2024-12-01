@@ -1,0 +1,56 @@
+<div class="topComponent">
+  <div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
+
+    <div class="login">
+      <form (ngSubmit)="login()">
+        <label for="chk" aria-hidden="true">Đăng nhập</label>
+        <input class="login-input" type="email" name="email" placeholder="Email" [(ngModel)]="DataLogin.email" required>
+        <div class="type-password">
+          <input class="type-password-input" [type]="showInputPassword ? 'text' : 'password'" name="pswd"
+            placeholder="Mật khẩu" [(ngModel)]="DataLogin.password" required>
+          <mat-icon matSuffix (click)="toggleInputPasswordVisibility()">
+            {{showInputPassword?'visibility':'visibility_off'}}
+          </mat-icon>
+        </div>
+        <button type="submit">Đăng nhập</button>
+        <p>{{login_message}}</p>
+      </form>
+    </div>
+
+    <div class="forgetPass">
+      <label for="chk" aria-hidden="true">Quên mật khẩu?</label>
+      <form *ngIf="!otpSent && !otpVerified" (ngSubmit)="sendOtp()">
+        <input class="login-input" type="email" name="email" [(ngModel)]="DataForget.email"
+          placeholder="Nhập Email/SĐT để nhận mã xác nhận" required>
+        <button type="submit">Gửi mã xác nhận</button>
+      </form>
+
+      <form *ngIf="otpSent && !otpVerified" (ngSubmit)="verifyOtp()">
+        <p for="otp">Nhập mã xác nhận tại đây</p>
+        <div class="otp-container">
+          <ng-otp-input (onInputChange)="onOtpChange($event)" [config]="{length: 6}" [(ngModel)]="otp"></ng-otp-input>
+        </div>
+        <button type="submit">Xác nhận</button>
+      </form>
+
+      <form *ngIf="otpVerified" (ngSubmit)="resetPassword()">
+        <div class="type-password">
+          <input class="type-password-input" matInput [type]="showPassword ? 'text' : 'password'" name="newPassword"
+            [(ngModel)]="newPassword" placeholder="Nhập mật khẩu mới...">
+          <mat-icon matSuffix (click)="togglePasswordVisibility()">
+            {{showPassword?'visibility':'visibility_off'}}
+          </mat-icon>
+        </div>
+        <div class="type-password">
+          <input class="type-password-input" matInput [type]="showConfirmPassword ? 'text' : 'password'"
+            name="confirmPassword" [(ngModel)]="confirmPassword" placeholder="Nhập lại mật khẩu...">
+          <mat-icon matSuffix (click)="toggleConfirmPasswordVisibility()">{{showConfirmPassword ? 'visibility' :
+            'visibility_off'}}</mat-icon>
+        </div>
+        <button type="submit">Xác nhận</button>
+        <p>{{ message }}</p>
+      </form>
+    </div>
+  </div>
+</div>

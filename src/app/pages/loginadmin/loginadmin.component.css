@@ -1,0 +1,209 @@
+.topComponent {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  font-family: 'Jost', sans-serif;
+  background: linear-gradient(to bottom, #97978d, #e9eaee, #ccc);
+}
+
+.main {
+  width: 80%;
+  max-width: 500px;
+  height: 95vh;
+  max-height: 800px;
+  background: #97978d;
+  overflow: hidden;
+  border-radius: 10px;
+  box-shadow: 5px 20px 50px #000;
+}
+
+#chk {
+  display: none;
+}
+
+.login,
+.forgetPass {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+label {
+  color: #fff;
+  font-size: 2rem;
+  justify-content: center;
+  display: flex;
+  margin: 20px 0;
+  font-weight: bold;
+  cursor: pointer;
+  transition: .5s ease-in-out;
+  text-align: center;
+}
+
+p {
+  justify-content: center;
+  display: flex;
+  font-size: 1.2rem;
+  color: #80827f;
+  padding-top: 10px;
+}
+
+.login {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.login-input{
+  width: 70%;
+  height: 15%;
+  background: #fff;
+  justify-content: center;
+  display: flex;
+  margin: 10px auto;
+  padding: 12px;
+  border: none;
+  outline: none;
+  border-radius: 5px;
+} 
+
+.otp-container {
+  display: flex;
+  justify-content: center;
+  margin: 0 auto;
+  width: 70%;
+}
+/*  */
+
+.otp-options {
+  display: flex;
+  width: 75%;
+  margin: 0 auto;
+  padding: 0 5px;
+  justify-content: center;
+}
+
+button {
+  width: 50%;
+  height: 50px;
+  margin: 10px auto;
+  display: block;
+  color: #97978d;
+  background: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-top: 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #97978d;
+  color: #fff;
+}
+
+.type-password {
+  display: flex;
+  align-items: center;
+  width: 70%;
+  /* height: 10%; */
+  margin: 10px auto;
+  background-color: #fff;
+  padding: 0 12px;
+  border-radius: 5px;
+}
+
+.type-password-input{
+  width: 100%;
+  padding: 12px 0;
+  border: none;
+  outline: none;
+}
+
+.forgetPass {
+  height: 100%;
+  background: #eee;
+  border-radius: 60% / 10%;
+  transform: translateY(-100px);
+  transition: .8s ease-in-out;
+}
+
+.forgetPass label {
+  padding-top: 1.5rem;
+  color: #97978d;
+  transform: scale(.6);
+}
+
+#chk:checked ~ .forgetPass {
+  transform: translateY(-600px);
+}
+
+#chk:checked ~ .forgetPass label {
+  transform: scale(1);
+}
+
+#chk:checked ~ .login label {
+  transform: scale(.6);
+}
+
+@media (max-width: 768px) {
+  .main {
+    width: 70%;
+    height: 75vh;
+  }
+
+  label {
+    font-size: 2em;
+  }
+
+  input,
+  button {
+    width: 70%;
+    font-size: 1em;
+  }
+
+  #chk:checked ~ .forgetPass {
+    transform: translateY(-400px);
+  }
+
+  #chk:checked ~ .forgetPass label {
+    transform: scale(1);
+  }
+
+  #chk:checked ~ .login label {
+    transform: scale(.6);
+  }
+}
+
+@media (max-width: 480px) {
+  .main {
+    width: 60%;
+    height: 60vh;
+  }
+
+  label {
+    font-size: 1.8em;
+  }
+
+  input,
+  button {
+    width: 60%;
+    font-size: 1.2em;
+  }
+
+  #chk:checked ~ .forgetPass {
+    transform: translateY(-100px);
+  }
+
+  #chk:checked ~ .forgetPass label {
+    transform: scale(1);
+  }
+
+  #chk:checked ~ .login label {
+    transform: scale(.6);
+  }
+}

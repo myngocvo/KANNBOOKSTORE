@@ -1,0 +1,127 @@
+html,
+body {
+  position: relative;
+  height: 100%;
+  background: #fff;
+  font-size: 14px;
+  color: #000;
+}
+
+.container {
+  max-width: 1300px;
+  margin: auto;
+}
+
+.vuidentruong {
+  margin-top: 20px;
+  margin-bottom: 20px;
+  max-width: 100%;
+  height: 370px;
+  display: block;
+  margin: auto;
+}
+
+.bo-tb-logo {
+  width: 200px;
+  margin-bottom: 10px;
+}
+
+.social-icons,
+.download-icons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+}
+
+.icon-btn img {
+  width: 25px;
+  height: auto;
+}
+
+.Banner-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 40px;
+
+}
+
+#carouselExampleControls {
+  flex: 0 0 70%;
+  max-width: 70%;
+  margin-right: 20px;
+  z-index: 0;
+}
+
+.picsum-img-wrapper {
+  width: 100%;
+  overflow: hidden;
+}
+
+.picsum-img-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.Banner {
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+}
+
+.banner-1 {
+  height: 50%;
+  margin-bottom: 12px;
+}
+
+.banner-2 {
+  height: 50%;
+  margin-top: 12px;
+}
+
+.Banner img {
+  max-width: 100%;
+  max-height: 100%;
+  height: auto;
+  display: block;
+}
+
+.banner-2 img {
+  height: 100%;
+}
+
+/* sp */
+
+.highlighted-products-section {
+  width: 100%;
+  border: 1px solid #E9EAEE;
+  border-radius: 5px;
+  background-color: #E9EAEE;
+  margin: 0 40px 0 0px;
+  padding-bottom: 30px;
+  margin-bottom: 40px;
+}
+
+.highlighted-title-card {
+  margin-bottom: 10px;
+  background-color: #97978D;
+  border-radius: 5px;
+}
+
+.products-container {
+  display: flex;
+  margin: 2%;
+  justify-content: flex-start;
+  background-color: #E9EAEE;
+}
