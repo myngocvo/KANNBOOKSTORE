@@ -2,23 +2,23 @@ import { Component } from '@angular/core';
 import { UsersService } from 'src/services/Users/users.service';
 import { Router } from '@angular/router';
 import { OtpService } from 'src/services/otp/otp.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 @Component({
   selector: 'app-loginadmin',
   templateUrl: './loginadmin.component.html',
   styleUrls: ['./loginadmin.component.css']
 })
 export class LoginadminComponent {
-
   constructor(
     private usersService: UsersService,
     private router: Router,
-    private otpService: OtpService
+    private otpService: OtpService,
+    private snackBar: MatSnackBar,
   ) { }
   showInputPassword: boolean = false;
   showPassword: boolean = false;
   showConfirmPassword: boolean = false;
-  message: string = '';
-  login_message='';
   DataLogin: any = {};
   DataForget: any = {};
   otpSent: boolean = false;
@@ -44,19 +44,25 @@ export class LoginadminComponent {
         this.usersService.signIn(this.DataLogin.email, this.DataLogin.password).subscribe(
           {
             next: (res) => {
+              this.snackBar.open('Đăng nhập thành công', 'Đóng', {
+                duration: 3000,
+              });
               this.router.navigate(['books']);
-          
             },
             error: (err) => {
               console.log("Đăng nhập không thành công", err);
-              this.login_message='Đăng nhập thất bại. Kiểm tra lại tài khoản và mật khẩu';
+              this.snackBar.open('Đăng nhập thất bại. Kiểm tra lại tài khoản và mật khẩu', 'Đóng', {
+                duration: 3000,
+              });
             }
           }
         );
       },
       error: (err) => {
         console.log("Đăng nhập không thành công", err);
-        this.login_message='Đăng nhập thất bại. Kiểm tra lại tài khoản và mật khẩu';
+        this.snackBar.open('Đăng nhập thất bại. Kiểm tra lại tài khoản và mật khẩu', 'Đóng', {
+          duration: 3000,
+        });
       }
     })
 
@@ -67,17 +73,23 @@ export class LoginadminComponent {
       next:() =>{
         this.usersService.sendOtpEmail(this.DataForget.email).subscribe({
           next: (response) => {
-            this.message = `Đã gửi mã xác nhận. Vui lòng kiểm tra mail của bạn`;
+            this.snackBar.open('Đã gửi mã xác nhận. Vui lòng kiểm tra mail của bạn', 'Đóng', {
+              duration: 3000,
+            });
             this.otpSent = true;
           },
           error: (err) => {
             console.error('Error sending OTP email:', err);
-            this.message = 'Đã xảy ra lỗi. Vui lòng kiểm tra lại email vừa nhập';
+            this.snackBar.open('Đã xảy ra lỗi. Vui lòng kiểm tra lại email vừa nhập', 'Đóng', {
+              duration: 3000,
+            });
           }
         });
       },
       error: (err) => {
-        this.message = 'Đã xảy ra lỗi. Vui lòng kiểm tra lại email vừa nhập';
+        this.snackBar.open('Đã xảy ra lỗi. Vui lòng kiểm tra lại email vừa nhập', 'Đóng', {
+          duration: 3000,
+        });
       }
     });
   }
@@ -91,7 +103,9 @@ export class LoginadminComponent {
         },
         error: (err) => {
           console.error('Error verifying OTP:', err);
-          this.message = 'Mã xác nhận không hợp lệ';
+          this.snackBar.open('Mã xác nhận không hợp lệ', 'Đóng', {
+            duration: 3000,
+          });
           this.otp='';
         }
       });
@@ -109,7 +123,9 @@ export class LoginadminComponent {
     if (this.newPassword === this.confirmPassword) {
       this.usersService.updatePassword(this.DataForget.email, this.newPassword).subscribe({
         next: () => {
-          this.message = 'Thay đổi mật khẩu thành công';
+          this.snackBar.open('Thay đổi mật khẩu thành công', 'Đóng', {
+            duration: 3000,
+          });
           this.otpVerified = false;
           const chkBox = document.getElementById('chk') as HTMLInputElement;
           if (chkBox) {
@@ -121,7 +137,9 @@ export class LoginadminComponent {
         }
       });
     } else {
-      this.message = 'Mật khẩu không khớp';
+      this.snackBar.open('Mật khẩu không khớp', 'Đóng', {
+        duration: 3000,
+      });
     }
   }
 

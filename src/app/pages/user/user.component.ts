@@ -179,7 +179,9 @@ export class UserComponent {
             console.log(dataupdate);
             this.customer.update(this.idcustomer, dataupdate).subscribe({
               next: (res) => {
-                alert("Thay đổi mật khẩu thành công")
+                this.snackBar.open('Thay đổi mật khẩu thành công', 'Đóng', {
+                  duration: 3000,
+                });
               },
               error: (err) => {
                 console.error('Lỗi thay đổi dữ liệu ', err);

@@ -196,7 +196,6 @@
                     <td>Tổng tiền: </td>
                     <td class="total-amount"><span>{{ bill.totalAmount | number:'1.0-0' }}<sup>đ</sup></span></td>
                   </tr>
-
                   <tr class="status-payment" *ngIf="bill.paymentStatus === 'Chưa Thanh Toán'">
                     <td><span>Thanh toán khi nhận hàng</span></td>
                     <td rowspan="2"><button mat-raised-button class="save-button" (click)="cancelOrder(bill.id)">HỦY
@@ -213,7 +212,9 @@
                   <tr *ngIf="bill.code_pay" class="status-payment">
                     <td>Mã giao dịch: {{bill.code_pay}}</td>
                   </tr>
-                  <tr>{{bill.id}}</tr>
+                  <tr class="status-payment">
+                    <td>Mã đơn hàng: {{bill.id}}</td>
+                  </tr>
                 </table>
               </div>
             </ng-template>
