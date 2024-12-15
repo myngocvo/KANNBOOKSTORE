@@ -4,12 +4,12 @@ import { ProductViewService } from 'src/services/ProductView/product-view.servic
 @Component({
   selector: 'app-comment',
   templateUrl: './comment.component.html',
-  styleUrls: ['./comment.component.css']
+  styleUrls: ['./comment.component.css'],
 })
 export class CommentComponent {
-  page = 1
-  sizepage = 7
-  View: any = {}
+  page = 1;
+  sizepage = 7;
+  View: any = {};
   datacommentfull: any[] = [];
   datacomment: any[] = [];
   loadpageReviewCount: number = 0;
@@ -20,15 +20,16 @@ export class CommentComponent {
   constructor(
     private el: ElementRef,
     private renderer: Renderer2,
-    private Comment: ProductViewService) {
-    this.LoadComment(1)
-    this.LoadCommentful()
+    private Comment: ProductViewService
+  ) {
+    this.LoadComment(1);
+    this.LoadCommentful();
   }
 
   LoadComment(page: number) {
     this.Comment.getProductReviews(page, this.sizepage).subscribe({
       next: (res: any) => {
-        this.loadpageReviewCount = res.totalCount
+        this.loadpageReviewCount = res.totalCount;
         this.datacomment = res.data;
       },
       error: (err) => {
@@ -48,7 +49,7 @@ export class CommentComponent {
   }
   searchResults: any[] = [];
   loadpro(title: string) {
-    this.LoadCommentful()
+    this.LoadCommentful();
     const search = this.el.nativeElement.querySelector('#searchview');
     const begin = this.el.nativeElement.querySelector('#Viewfirst');
     this.renderer.setStyle(begin, 'display', 'none');
@@ -60,50 +61,49 @@ export class CommentComponent {
       return;
     }
     const searchTerm = title.toLowerCase();
-    this.searchResults = this.datacommentfull.filter(View =>
+    this.searchResults = this.datacommentfull.filter((View) =>
       View.title.toLowerCase().includes(searchTerm)
     );
   }
 
   onPageChange(newPage: number): void {
     this.page = newPage;
-    this.LoadComment(this.page)
+    this.LoadComment(this.page);
   }
 
-  selectAll(event: any) {
-    if (event.target.checked) {
-      this.datacommentfull.forEach(comment => {
-        if (!this.selectedComments.includes(comment))
-          this.selectedComments.push(comment)
-      })
+  selectAll(checked: boolean) {
+    if (checked) {
+      this.selectedComments = [...this.datacomment]; // Chọn tất cả các bình luận
     } else {
-      this.selectedComments = []
+      this.selectedComments = []; // Bỏ chọn tất cả
     }
   }
 
-  selectComment(event: any, comment: any) {
-    if (event.target.checked) {
+  selectComment(checked: boolean, comment: any) {
+    if (checked) {
       this.selectedComments.push(comment);
-    }
-    else {
-      this.selectedComments = this.selectedComments.filter(cmt => comment.id !== cmt.id)
-      this.selectAllChecked = false
+    } else {
+      this.selectedComments = this.selectedComments.filter(
+        (cmt) => cmt.id !== comment.id
+      );
     }
   }
 
   isSelected(comment: any): boolean {
-    let res = false;
-    this.selectedComments.forEach(cmt => {
-      if (cmt.id === comment.id) {
-        res = true;
-      }
-    });
-    return res;
+    return this.selectedComments.some((cmt) => cmt.id === comment.id);
   }
 
   isSelectAllChecked(): boolean {
-    console.log("checkkkk")
-    return this.selectedComments.length == this.datacommentfull.length
+    return (
+      this.selectedComments.length === this.datacomment.length &&
+      this.datacomment.length > 0
+    );
+  }
+  isIndeterminate(): boolean {
+    return (
+      this.selectedComments.length > 0 &&
+      this.selectedComments.length < this.datacomment.length
+    );
   }
 
   deleteSelectedComments() {
@@ -111,17 +111,15 @@ export class CommentComponent {
       return;
     }
 
-    this.selectedComments.forEach(comment => {
+    this.selectedComments.forEach((comment) => {
       this.Comment.deleteProductReview(comment.id).subscribe({
-        next: () => {
-          
-        },
+        next: () => {},
         error: (err) => {
           console.error('Lỗi khi xóa bình luận:', err);
         },
         complete: () => {
-          alert("Đã xóa các comment thành công")
-        }
+          alert('Đã xóa các comment thành công');
+        },
       });
     });
 
@@ -137,6 +135,5 @@ export class CommentComponent {
   closeDeleteModal() {
     this.isDeleteModalVisible = false;
     this.LoadComment(this.page);
-
   }
 }

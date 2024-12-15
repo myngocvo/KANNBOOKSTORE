@@ -1,46 +1,34 @@
-.container
-{
+.container {
   position: relative;
   width: 250px;
 }
+
 .logo img {
-    width: 100%;
-    margin-bottom: 20px;
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
 }
 
-.menu-list mat-icon{
-    margin-bottom: -5px;
+.menu-list {
+  margin-top: 20px;
 }
 
-.example-tree-invisible {
-    display: none;
-  }
-  
-  .example-tree ul,
-  .example-tree li {
-    margin-top: 0;
-    margin-bottom: 0;
-    list-style-type: none;
-  }
-  
-  
-  .example-tree .mat-nested-tree-node div[role=group] {
-    padding-left: 40px;
-  }
-  
-
-  .example-tree div[role=group] > .mat-tree-node {
-    padding-left: 40px;
-  }
-  
-  .info-table img {
-    width: 45%;
+mat-list-item {
+  display: flex;
+  align-items: center;
 }
 
-.info-table th input[type="checkbox"],
-.info-table td input[type="checkbox"]{
-    width: 20px; /* Chiều rộng */
-    height: 20px; /* Chiều cao */
-    position: relative;
-    left: 15px;
+mat-icon {
+  margin-right: 10px;
+  margin-bottom: -5px;
+}
+
+mat-list-item {
+  cursor: pointer;
+}
+
+mat-list-item.active {
+  background-color: #97978D;
+  border-radius: 4px;
 }

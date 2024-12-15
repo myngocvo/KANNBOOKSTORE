@@ -5,7 +5,12 @@ import { Customer } from 'src/interfaces/Customer';
 import { Router } from '@angular/router';
 import { OrdersService } from 'src/services/Orders/orders.service';
 import { ShoppingCartItem } from 'src/interfaces/Orders';
-import { CloudConfig, Cloudinary, CloudinaryImage, URLConfig } from '@cloudinary/url-gen';
+import {
+  CloudConfig,
+  Cloudinary,
+  CloudinaryImage,
+  URLConfig,
+} from '@cloudinary/url-gen';
 import { fill } from '@cloudinary/url-gen/actions/resize';
 import { UploadService } from 'src/services/Users/upload.service';
 import { BillsService } from 'src/services/Bills/bills.service';
@@ -14,8 +19,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { CartsService } from 'src/services/Carts/carts.service';
 import { ProductViewService } from 'src/services/ProductView/product-view.service';
 import { ProductReviewBookid } from 'src/interfaces/ProductView';
-import { NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Meta, Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -34,19 +40,22 @@ export class UserComponent {
   address: string = '';
   blameaddress: any = {};
   selectedDate: Date = new Date();
-  shopingCart: ShoppingCartItem[] = []
+  shopingCart: ShoppingCartItem[] = [];
   totalcart: number = 0;
   productId: string | null = null;
   averageRating: number = 0;
-  commemtrating: { rating?: number, comment?: string } = {};
+  commemtrating: { rating?: number; comment?: string } = {};
   productViewinterface: ProductReviewBookid[] = [];
   isReviewed: string = '';
   active = 1;
-  private commentStatusSubject = new BehaviorSubject<{ [bookId: string]: boolean }>({});
-  commentStatus$: Observable<{ [bookId: string]: boolean }> = this.commentStatusSubject.asObservable();
+  private commentStatusSubject = new BehaviorSubject<{
+    [bookId: string]: boolean;
+  }>({});
+  commentStatus$: Observable<{ [bookId: string]: boolean }> =
+    this.commentStatusSubject.asObservable();
   showPage(pageName: string) {
     if (pageName === 'donHang') {
-      this.StatusBill('Chờ Xác Nhận')
+      this.StatusBill('Chờ Xác Nhận');
     }
     this.currentPage = pageName;
   }
@@ -54,7 +63,7 @@ export class UserComponent {
   selectMenuItem(itemName: string) {
     this.selectedMenuItem = itemName;
     if (itemName == 'dangxuat') {
-      this.openConfirmDialog()
+      this.openConfirmDialog();
     }
   }
   constructor(
@@ -69,67 +78,64 @@ export class UserComponent {
     private billService: BillsService,
     private productView: ProductViewService,
     private modalService: NgbModal,
+    private title: Title
   ) {
+    this.title.setTitle('Hồ sơ cá nhân');
     const savedImageSrc = localStorage.getItem('userImageSrc');
     if (savedImageSrc) {
       this.userImageSrc = savedImageSrc;
     }
-    this.getCustomerID()
-    this.CartShoping()
+    this.getCustomerID();
+    // this.CartShoping();
   }
   idUser!: string;
   img!: CloudinaryImage;
   publicIdPost!: string;
   imgFromUser!: CloudinaryImage;
-  cloudName = "dpk9xllkq";
-  uploadPreset = "angular_app";
+  cloudName = 'dpk9xllkq';
+  uploadPreset = 'angular_app';
   userImageSrc!: string;
   file!: File | null;
   getCustomerID() {
     this.blameaddress = {
-      t:  '',
+      t: '',
       h: '',
-      x:  '',
-      ap:  ''
+      x: '',
+      ap: '',
     };
     this.idcustomer = this.customer.getClaimValue();
-    this.customerMain.CustomersId(this.idcustomer).subscribe
-      ({
-        next: (res) => {
-          this.getCustomer = res
-          this.idUser = res.id
-          this.gender = res.gender;
-          this.phone = res.phone;
-          this.photo = res.photo;
-          if(this.getCustomer)
-            {
-              this.getCustomer.birthday?.setDate(res.birthday+1)
-            }
-          if (res.address === null||res.address==='string') {
-            this.blameaddress.t = "Nhập tỉnh";
-            this.blameaddress.h = 'Nhập huyện';
-            this.blameaddress.x = 'Nhập xã'
-            this.blameaddress.ap = 'Nhập Ấp';
-          } else {
-            this.blameaddress = extractAddressInfo(res.address)
-          }
-         
-          const cloudConfig = new CloudConfig({ cloudName: 'dpk9xllkq' });
-          const urlConfig = new URLConfig({ secure: true });
-          console.log(this.photo)
-          this.img = new CloudinaryImage(this.photo, cloudConfig, urlConfig);
-          this.img.resize(fill().height(70).width(70))
-        },
-        error: (err) => {
-          console.error('Lỗi lấy dữ liệu ', err);
-        },
-      })
+    this.customerMain.CustomersId(this.idcustomer).subscribe({
+      next: (res) => {
+        this.getCustomer = res;
+        this.idUser = res.id;
+        this.gender = res.gender;
+        this.phone = res.phone;
+        this.photo = res.photo;
+        if (this.getCustomer) {
+          this.getCustomer.birthday;
+        }
+        if (res.address === null || res.address === 'string') {
+          this.blameaddress.t = 'Nhập tỉnh';
+          this.blameaddress.h = 'Nhập huyện';
+          this.blameaddress.x = 'Nhập xã';
+          this.blameaddress.ap = 'Nhập Ấp';
+        } else {
+          this.blameaddress = extractAddressInfo(res.address);
+        }
+
+        const cloudConfig = new CloudConfig({ cloudName: 'dpk9xllkq' });
+        const urlConfig = new URLConfig({ secure: true });
+        this.img = new CloudinaryImage(this.photo, cloudConfig, urlConfig);
+        this.img.resize(fill().height(70).width(70));
+      },
+      error: (err) => {
+        console.error('Lỗi lấy dữ liệu ', err);
+      },
+    });
   }
 
-  ngOnInit() {
-
-  }
-  atedBookIds: Set<number> = new Set<number>();  // Mảng để lưu trữ các bookId đã được đánh giá
+  ngOnInit() {}
+  atedBookIds: Set<number> = new Set<number>(); // Mảng để lưu trữ các bookId đã được đánh giá
   ratedBookIds: Set<number> = new Set<number>(); // Sử dụng Set thay vì Array
 
   loadCommentsStatus() {
@@ -141,7 +147,7 @@ export class UserComponent {
       },
       error: (err) => {
         console.error('Lỗi khi lấy đánh giá:', err);
-      }
+      },
     });
   }
 
@@ -154,9 +160,8 @@ export class UserComponent {
     return false; // Trả về false nếu không tìm thấy bất kỳ bookId nào trong ratedBookIds
   }
 
-
   getOrdersByStatus(status: number): ShoppingCartItem[] {
-    return this.shopingCart.filter(item => item.status === status);
+    return this.shopingCart.filter((item) => item.status === status);
   }
   Updatepass() {
     const dataupdate = {
@@ -169,31 +174,31 @@ export class UserComponent {
       gender: this.gender,
       address: this.getCustomer?.address,
       birthday: this.getCustomer?.birthday,
-    }
+    };
     const password = this.Dataupdatepassword.passwordODL;
-    if (this.Dataupdatepassword.password == this.Dataupdatepassword.passwordconfirm) {
-      this.customer.updatepass(this.phone, password).subscribe
-        ({
-          next: (res) => {
-            this.idcustomer = this.customer.getClaimValue();
-            console.log(dataupdate);
-            this.customer.update(this.idcustomer, dataupdate).subscribe({
-              next: (res) => {
-                this.snackBar.open('Thay đổi mật khẩu thành công', 'Đóng', {
-                  duration: 3000,
-                });
-              },
-              error: (err) => {
-                console.error('Lỗi thay đổi dữ liệu ', err);
-              },
-            });
-          },
-          error: (err) => {
-            console.error('Mật khẩu không đúng ', err);
-          },
-        })
-    }
-    else {
+    if (
+      this.Dataupdatepassword.password ==
+      this.Dataupdatepassword.passwordconfirm
+    ) {
+      this.customer.updatepass(this.phone, password).subscribe({
+        next: (res) => {
+          this.idcustomer = this.customer.getClaimValue();
+          this.customer.update(this.idcustomer, dataupdate).subscribe({
+            next: (res) => {
+              this.snackBar.open('Thay đổi mật khẩu thành công', 'Đóng', {
+                duration: 3000,
+              });
+            },
+            error: (err) => {
+              console.error('Lỗi thay đổi dữ liệu ', err);
+            },
+          });
+        },
+        error: (err) => {
+          console.error('Mật khẩu không đúng ', err);
+        },
+      });
+    } else {
       this.snackBar.open(' Mật khẩu không khớp ', 'Đóng', {
         duration: 3000,
       });
@@ -201,7 +206,7 @@ export class UserComponent {
   }
   Address() {
     this.idcustomer = this.customer.getClaimValue();
-    this.updateAddress()
+    this.updateAddress();
     const dataupdate = {
       id: this.idcustomer,
       fullName: this.getCustomer?.fullName,
@@ -212,29 +217,27 @@ export class UserComponent {
       gender: this.gender,
       address: this.fulladdress,
       birthday: this.getCustomer?.birthday,
-      phone: this.getCustomer?.phone
-    }
-    this.customerMain.updateCustomer(this.idcustomer, dataupdate).subscribe(
-      {
-        next: (res) => {
-          this.getCustomerID()
-          this.snackBar.open(' Lưu địa chỉ thành công ', 'Đóng', {
-            duration: 3000,
-          });
-        },
-        error: (err) => {
-          this.snackBar.open(' Lỗi thay đổi dữ liệu  ', 'Đóng', {
-            duration: 4000,
-          });
-        },
-      }
-    )
+      phone: this.getCustomer?.phone,
+    };
+    this.customerMain.updateCustomer(this.idcustomer, dataupdate).subscribe({
+      next: (res) => {
+        this.getCustomerID();
+        this.snackBar.open(' Lưu địa chỉ thành công ', 'Đóng', {
+          duration: 3000,
+        });
+      },
+      error: (err) => {
+        this.snackBar.open(' Lỗi thay đổi dữ liệu  ', 'Đóng', {
+          duration: 4000,
+        });
+      },
+    });
   }
   updateprofile() {
     //công thêm 1 ngày
     if (this.getCustomer?.birthday) {
       const originalDate = new Date(this.getCustomer.birthday);
-      originalDate.setDate(originalDate.getDate()+1);
+      originalDate.setDate(originalDate.getDate() + 1);
       this.getCustomer.birthday = originalDate;
     }
     this.idcustomer = this.customer.getClaimValue();
@@ -248,47 +251,42 @@ export class UserComponent {
       gender: this.gender,
       address: this.getCustomer?.address,
       birthday: this.getCustomer?.birthday,
-      phone: this.getCustomer?.phone
-    }
-    this.customerMain.updateCustomer(this.idcustomer, dataupdate).subscribe(
-      {
-        next: (res) => {
-          this.snackBar.open(' Lưu hồ sơ thành công ', 'Đóng', {
-            duration: 3000,
-          });
-          window.location.reload()
-        },
-        error: (err) => {
-          this.snackBar.open(' Lỗi thay lưu dữ liệu ', 'Đóng', {
-            duration: 4000,
-          });
-        },
-      }
-    )
+      phone: this.getCustomer?.phone,
+    };
+    this.customerMain.updateCustomer(this.idcustomer, dataupdate).subscribe({
+      next: (res) => {
+        this.snackBar.open(' Lưu hồ sơ thành công ', 'Đóng', {
+          duration: 3000,
+        });
+        window.location.reload();
+      },
+      error: (err) => {
+        this.snackBar.open(' Lỗi thay lưu dữ liệu ', 'Đóng', {
+          duration: 4000,
+        });
+      },
+    });
   }
 
-  CartShoping() {
-    this.ordersservice.getHistoryOrders(this.idcustomer).subscribe(
-      {
-        next: (res) => {
-          this.shopingCart = res;
+  // CartShoping() {
+  //   this.ordersservice.getHistoryOrders(this.idcustomer).subscribe({
+  //     next: (res) => {
+  //       this.shopingCart = res;
 
-          this.shopingCart.forEach(element => {
-            for (let i = 0; i < element.image0.length; i++) {
-              this.totalcart += element.price[i] * element.quantity[i];
-            }
-          });
-        },
-        error: (err) => {
-          console.log(err);
-        },
-      }
-    );
-    this.totalcart += 20000
-  }
+  //       this.shopingCart.forEach((element) => {
+  //         for (let i = 0; i < element.image0.length; i++) {
+  //           this.totalcart += element.price[i] * element.quantity[i];
+  //         }
+  //       });
+  //     },
+  //     error: (err) => {
+  //       console.log(err);
+  //     },
+  //   });
+  //   this.totalcart += 20000;
+  // }
   onDateChange(event: any) {
-    this.selectedDate = event.value +1;
-    console.log('Selected Date:', this.selectedDate);
+    this.selectedDate = event.value + 1;
   }
   //------------Đăng xuẩt------------------------
   checkconfirm = false;
@@ -299,11 +297,10 @@ export class UserComponent {
     const dialogRef = this.dialog.open(this.confirmDialog, {
       width: '300px',
     });
-    console.log(this.checkkind)
     if (this.checkkind == '') {
-      this.isMessage = 'Bạn có chắc chắn muốn đăng xuất không?'
+      this.isMessage = 'Bạn có chắc chắn muốn đăng xuất không?';
     }
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.onConfirm();
       } else {
@@ -326,20 +323,17 @@ export class UserComponent {
           console.error('Lỗi khi hủy đơn hàng:', err);
           this.snackBar.open('Có lỗi xảy ra khi hủy đơn hàng!', 'Đóng', {
             duration: 4000,
-          })
-        }
+          });
+        },
       });
-    }
-    else {
+    } else {
       this.logout();
     }
-
   }
   cancelOrder(billId: string) {
-    this.checkkind = billId
-    this.isMessage = 'Bạn có chắc chắn muốn hủy đơn không?'
-    this.openConfirmDialog()
-
+    this.checkkind = billId;
+    this.isMessage = 'Bạn có chắc chắn muốn hủy đơn không?';
+    this.openConfirmDialog();
   }
   onCancel(): void {
     this.dialog.closeAll();
@@ -347,11 +341,11 @@ export class UserComponent {
   }
   logout() {
     localStorage.removeItem('access_token');
-    this.isMessage = 'Bạn có chắc chắn muốn đăng xuất không?'
+    this.isMessage = 'Bạn có chắc chắn muốn đăng xuất không?';
     this.snackBar.open(' Đăng xuất thành công ', 'Đóng', {
       duration: 3000,
     });
-    this.router.navigate(['home'])
+    this.router.navigate(['home']);
   }
   // ---------------Đánh giá-------------------
   open(content: any) {
@@ -360,18 +354,16 @@ export class UserComponent {
   }
   bookComment: any;
 
-  portratingcomment(bill: any) { 
+  portratingcomment(bill: any) {
     bill.orderDetails.forEach((detail: any) => {
-      const dataProductView =
-      {
+      const dataProductView = {
         id: detail.bookId + this.idcustomer,
         customerId: this.idcustomer,
         bookId: detail.bookId,
         rating: this.commemtrating.rating || 5,
         comment: this.commemtrating.comment || '',
         ngayCommemt: new Date().toISOString(),
-      }
-      console.log(dataProductView)
+      };
       this.productView.addProductReview(dataProductView).subscribe({
         next: (res) => {
           this.snackBar.open(' Cảm ơn bạn đã đánh giá ', 'Đóng', {
@@ -382,10 +374,8 @@ export class UserComponent {
           this.snackBar.open(' Bạn đã đánh giá sản phẩm này ', 'Đóng', {
             duration: 3000,
           });
-
         },
       });
-
     });
   }
   onRatingChange(selectedRating: number) {
@@ -413,7 +403,7 @@ export class UserComponent {
         },
         error: (err: any) => {
           console.error('Error adding product to cart', err);
-        }
+        },
       });
     });
   }
@@ -430,7 +420,6 @@ export class UserComponent {
     const inputFile = event.target as HTMLInputElement;
     if (inputFile && inputFile.files && inputFile.files.length > 0) {
       this.file = inputFile.files[0];
-      console.log('Tên của tệp đã chọn:', this.file);
       const data = new FormData();
       data.append('file', this.file);
       data.append('upload_preset', 'angular_app');
@@ -451,26 +440,26 @@ export class UserComponent {
               gender: this.getCustomer?.gender,
               address: this.getCustomer?.address,
               birthday: this.getCustomer?.birthday,
-              phone: this.getCustomer?.phone
+              phone: this.getCustomer?.phone,
             };
-
-            console.log(customerUpdateData);
-            this.customerMain.updateCustomer(this.idUser, customerUpdateData).subscribe({
-              next: () => {
-                window.location.reload();
-                this.snackBar.open('Upload ảnh thành công!', 'Đóng', {
-                  duration: 3000,
-                });
-              },
-              error: (err: any) => {
-                console.error("Lỗi khi cập nhật dữ liệu:", err);
-              }
-            });
+            this.customerMain
+              .updateCustomer(this.idUser, customerUpdateData)
+              .subscribe({
+                next: () => {
+                  window.location.reload();
+                  this.snackBar.open('Upload ảnh thành công!', 'Đóng', {
+                    duration: 3000,
+                  });
+                },
+                error: (err: any) => {
+                  console.error('Lỗi khi cập nhật dữ liệu:', err);
+                },
+              });
           }
         },
         error: (err: any) => {
-          console.error("Lỗi khi upload ảnh:", err);
-        }
+          console.error('Lỗi khi upload ảnh:', err);
+        },
       });
     }
   }
@@ -484,26 +473,34 @@ export class UserComponent {
   disableAddressFields: boolean = false;
   fulladdress: string = '';
   updateAddress() {
-    this.detailedAddress = `${', ' + '' + this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t}`;
-    this.fulladdress = `${this.apt ? this.apt + ', ' : ''}${this.blameaddress.x ? this.blameaddress.x + ', ' : ''}${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${this.blameaddress.t || ''}`;
+    this.detailedAddress = `${
+      ', ' + '' + this.blameaddress.x ? this.blameaddress.x + ', ' : ''
+    }${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${
+      this.blameaddress.t
+    }`;
+    this.fulladdress = `${this.apt ? this.apt + ', ' : ''}${
+      this.blameaddress.x ? this.blameaddress.x + ', ' : ''
+    }${this.blameaddress.h ? this.blameaddress.h + ', ' : ''}${
+      this.blameaddress.t || ''
+    }`;
     this.disableAddressFields = this.detailedAddress.trim() !== ''; // Kiểm tra xem có địa chỉ chi tiết không để vô hiệu hóa trường
-    console.log(this.fulladdress)
+    console.log(this.fulladdress);
   }
 
   bills: any = [];
 
   StatusBill(status: string) {
-    this.checkkind = ''
-    this.bills = []
+    this.checkkind = '';
+    this.bills = [];
     this.billService.getBillStatus(this.idcustomer, status).subscribe({
       next: (res: any[]) => {
         this.bills = res;
         this.sortBills();
-        this.loadCommentsStatus()
+        this.loadCommentsStatus();
       },
       error: (err: any) => {
-        console.error("Lỗi khi cập nhật dữ liệu:", err);
-      }
+        console.error('Lỗi khi cập nhật dữ liệu:', err);
+      },
     });
   }
   sortBills() {
@@ -514,11 +511,11 @@ export class UserComponent {
       return 0;
     });
   }
- 
-  
 }
-function extractAddressInfo(fullAddress: string): { x: string; h: string; t: string } | null {
-  const addressParts = fullAddress.split(',').map(part => part.trim());
+function extractAddressInfo(
+  fullAddress: string
+): { x: string; h: string; t: string } | null {
+  const addressParts = fullAddress.split(',').map((part) => part.trim());
 
   if (addressParts.length < 3) {
     return null;
@@ -529,9 +526,6 @@ function extractAddressInfo(fullAddress: string): { x: string; h: string; t: str
   return {
     x: x || '',
     h: h || '',
-    t: t || ''
+    t: t || '',
   };
 }
-
-
-

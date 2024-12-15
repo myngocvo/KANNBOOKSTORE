@@ -20,14 +20,19 @@
                     </button>
                 </div>
                 <div class="add-container">
-                    <button mat-raised-button class="add-btn" class="delete-selected-btn" (click)="deleteSelectedComments()">Xoá tất cả</button>
+                    <button mat-raised-button class="add-btn" class="delete-selected-btn"
+                        (click)="deleteSelectedComments()">Xoá tất cả</button>
                 </div>
             </div>
             <div id="Viewfirst">
                 <table class="info-table">
                     <thead>
                         <tr>
-                            <th><input type="checkbox" (change)="selectAll($event)" [checked]="isSelectAllChecked()"></th>
+                            <th>
+                                <mat-checkbox [checked]="isSelectAllChecked()" [indeterminate]="isIndeterminate()"
+                                    (change)="selectAll($event.checked)">
+                                </mat-checkbox>
+                            </th>
                             <th>Tên sách</th>
                             <th>Bình luận</th>
                             <th>Người bình luận</th>
@@ -38,7 +43,9 @@
                     </thead>
                     <tbody>
                         <tr *ngFor="let cmt of datacomment">
-                            <td><input type="checkbox" (change)="selectComment($event, cmt)" [checked]="isSelected(cmt)"></td>
+                            <td><mat-checkbox (change)="selectComment($event.checked, cmt)" [checked]="isSelected(cmt)">
+                                </mat-checkbox>
+                            </td>
                             <td>{{ cmt.bookTitle }}</td>
                             <td>{{ cmt.comment}}</td>
                             <td>{{ cmt.customerName}}</td>

@@ -1,34 +1,48 @@
 <div class="container">
-<div class="logo">
-    <img src="assets/logo.png" alt="logo">
-</div>
-<hr>
-<div class="menu-list">
-    <mat-nav-list>
-        <mat-list-item routerLink="/books" >
-            <mat-icon>book</mat-icon> Sách
-        </mat-list-item>
-        <mat-list-item routerLink="/user-admin">
-            <mat-icon>person</mat-icon> Người dùng
-        </mat-list-item>
-        <mat-list-item routerLink="/order-admin">
-            <mat-icon>receipt</mat-icon> Đơn hàng
-        </mat-list-item>
-        <mat-list-item routerLink="/voucher-admin">
-            <mat-icon>card_giftcard</mat-icon> Voucher
-        </mat-list-item>
-        <mat-list-item routerLink="/comment-admin">
-            <mat-icon>comment</mat-icon> Bình luận
-        </mat-list-item>
-        <mat-list-item routerLink="/staff-admin">
-            <mat-icon>people</mat-icon> Nhân viên
-        </mat-list-item>
-        <mat-list-item routerLink="/revenue-admin">
-            <mat-icon>bar_chart</mat-icon> Thống kê doanh thu
-        </mat-list-item>
-        <mat-list-item (click)="logout()">
-          <mat-icon>logout</mat-icon> Đăng xuất
-      </mat-list-item>
-    </mat-nav-list>
-</div>
+    <div class="logo">
+        <img src="assets/logo.png" alt="logo">
+    </div>
+    <hr>
+    <div class="menu-list">
+        <mat-nav-list>
+            <mat-list-item routerLink="/books" routerLinkActive="active">
+                <mat-icon>book</mat-icon>
+                <span>Sách</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/user-admin" routerLinkActive="active">
+                <mat-icon>person</mat-icon>
+                <span>Người dùng</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/order-admin" routerLinkActive="active">
+                <mat-icon>receipt</mat-icon>
+                <span>Đơn hàng</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/voucher-admin" routerLinkActive="active">
+                <mat-icon>card_giftcard</mat-icon>
+                <span>Mã giảm giá</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/comment-admin" routerLinkActive="active">
+                <mat-icon>comment</mat-icon>
+                <span>Bình luận</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/staff-admin" routerLinkActive="active">
+                <mat-icon>people</mat-icon>
+                <span>Nhân viên</span>
+            </mat-list-item>
+
+            <mat-list-item routerLink="/revenue-admin" routerLinkActive="active">
+                <mat-icon>bar_chart</mat-icon>
+                <span>Thống kê doanh thu</span>
+            </mat-list-item>
+            <mat-list-item (click)="logout()">
+                <mat-icon>logout</mat-icon>
+                <span>Đăng xuất</span>
+            </mat-list-item>
+        </mat-nav-list>
+    </div>
 </div>

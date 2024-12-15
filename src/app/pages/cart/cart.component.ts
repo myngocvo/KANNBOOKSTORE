@@ -8,18 +8,19 @@ import { SharedataService } from 'src/services/sharedata/sharedata.service';
 import { forkJoin } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
-  styleUrls: ['./cart.component.css']
+  styleUrls: ['./cart.component.css'],
 })
 export class CartComponent {
   quantity: { [key: string]: number } = {};
   idcustomer: string = '';
   Cartinterface: Cart[] = [];
   checkCart: boolean = false;
-  books: BookDetailsViewModel[] = []
+  books: BookDetailsViewModel[] = [];
   isChecked: { [key: string]: boolean } = {};
   productsPrice: { [id: string]: number } = {};
   checkedProductIds: string[] = [];
@@ -33,26 +34,32 @@ export class CartComponent {
     private cartService: CartsService,
     private customer: CustomerService,
     private bookservice: BooksService,
-    private renderer: Renderer2) {
+    private renderer: Renderer2,
+    private title: Title
+  ) {
+    this.title.setTitle('Giỏ hàng');
     this.idcustomer = this.customer.getClaimValue();
-    this.refreshCartData()
+    this.refreshCartData();
   }
   checkCartdisplay(check: boolean, idBooks: string[]): void {
     if (check) {
-      const bookObservables = idBooks.map(id => this.bookservice.getBookDetailsWithImagesid(id));
+      const bookObservables = idBooks.map((id) =>
+        this.bookservice.getBookDetailsWithImagesid(id)
+      );
       forkJoin(bookObservables).subscribe({
         next: (results) => {
           this.books = results;
           results.forEach((book) => {
             // Layays giá tiền của sách
             if (!this.productsPrice.hasOwnProperty(book.bookId)) {
-              this.productsPrice[book.bookId] = (1 - book.pricePercent) * book.unitPrice;
+              this.productsPrice[book.bookId] =
+                (1 - book.pricePercent) * book.unitPrice;
             }
           });
         },
         error: (er) => {
           console.log('Lỗi lấy dữ liệu');
-        }
+        },
       });
       const Cart = this.el.nativeElement.querySelector('#cart');
       this.renderer.setStyle(Cart, 'display', 'block');
@@ -65,17 +72,17 @@ export class CartComponent {
     this.idcustomer = this.customer.getClaimValue();
     this.cartService.deleteCartsById(idbook + this.idcustomer).subscribe({
       next: (results) => {
-        this.totalProduct = 0
-        this.totalmoney = 0
-        this.isChecked[idbook] = false
-        this.deleteProductPrice(idbook)
-        this.deleteCheckedProductIds(idbook)
+        this.totalProduct = 0;
+        this.totalmoney = 0;
+        this.isChecked[idbook] = false;
+        this.deleteProductPrice(idbook);
+        this.deleteCheckedProductIds(idbook);
         this.checkchooseproduct();
         this.refreshCartData();
       },
       error: (er) => {
         console.log('Lỗi xóa dữ liệu');
-      }
+      },
     });
   }
   //xóa phần tư ra khỏi chuỗi
@@ -96,7 +103,9 @@ export class CartComponent {
       next: (res) => {
         this.Cartinterface = res;
         this.checkCart = true;
-        const idBooksArray: string[] = res.map((cartItem: Cart) => cartItem.bookId);
+        const idBooksArray: string[] = res.map(
+          (cartItem: Cart) => cartItem.bookId
+        );
         this.checkCartdisplay(this.checkCart, idBooksArray);
       },
       error: (er) => {
@@ -104,28 +113,33 @@ export class CartComponent {
         this.renderer.setStyle(Cart, 'display', 'none');
         const CartNone = this.el.nativeElement.querySelector('#cartnone');
         this.renderer.setStyle(CartNone, 'display', 'flex');
-      }
+      },
     });
   }
 
   // Other methods...
   updateQuantity(bookId: string, newQuantity: number): void {
-    this.quantity[bookId] = this.quantity[bookId] = parseInt(newQuantity.toString(), 10);
-    this.totalProduct = 0
-    this.totalmoney = 0
+    this.quantity[bookId] = this.quantity[bookId] = parseInt(
+      newQuantity.toString(),
+      10
+    );
+    this.totalProduct = 0;
+    this.totalmoney = 0;
     console.log(this.quantity[bookId]);
-    this.checkchooseproduct()
+    this.checkchooseproduct();
   }
 
   toggleCheckbox(event: any, bookId: string): void {
     this.isChecked[bookId] = event.checked;
     this.cdr.detectChanges();
     // Update the array of checked product IDs
-    this.totalProduct = 0
-    this.totalmoney = 0
-    this.checkedProductIds = Object.keys(this.isChecked).filter(id => this.isChecked[id]);
+    this.totalProduct = 0;
+    this.totalmoney = 0;
+    this.checkedProductIds = Object.keys(this.isChecked).filter(
+      (id) => this.isChecked[id]
+    );
     this.checkchooseproduct();
-    console.log(this.checkedProductIds)
+    console.log(this.checkedProductIds);
   }
   checkchooseproduct() {
     if (this.checkedProductIds.length > 0) {
@@ -135,11 +149,11 @@ export class CartComponent {
         }
         this.totalProduct += this.quantity[i];
         this.totalmoney += this.productsPrice[i] * this.quantity[i];
-        console.log(this.totalmoney)
+        console.log(this.totalmoney);
       }
     } else {
-      this.totalProduct = 0
-      this.totalmoney = 0
+      this.totalProduct = 0;
+      this.totalmoney = 0;
     }
   }
   percent1(price: number, per: number): number {
@@ -152,28 +166,37 @@ export class CartComponent {
       const uniqueKey = `payment_${new Date().getTime()}`;
 
       // Lưu trữ dữ liệu vào sessionStorage
-      sessionStorage.setItem(`${uniqueKey}_checkedProductIds`, JSON.stringify(this.checkedProductIds));
-      sessionStorage.setItem(`${uniqueKey}_productsPrice`, JSON.stringify(this.productsPrice));
-      sessionStorage.setItem(`${uniqueKey}_quantity`, JSON.stringify(this.quantity));
+      sessionStorage.setItem(
+        `${uniqueKey}_checkedProductIds`,
+        JSON.stringify(this.checkedProductIds)
+      );
+      sessionStorage.setItem(
+        `${uniqueKey}_productsPrice`,
+        JSON.stringify(this.productsPrice)
+      );
+      sessionStorage.setItem(
+        `${uniqueKey}_quantity`,
+        JSON.stringify(this.quantity)
+      );
       this.router.navigate(['payment'], {
-        queryParams: { sessionKey: uniqueKey }
+        queryParams: { sessionKey: uniqueKey },
       });
     } else {
-      alert("Bạn chưa chọn giỏ hàng")
+      alert('Bạn chưa chọn giỏ hàng');
     }
   }
 
   selectAll(event: any): void {
     const selectAllChecked = event.checked;
-    this.totalProduct = 0
-    this.totalmoney = 0
-    this.books.forEach(book => {
+    this.totalProduct = 0;
+    this.totalmoney = 0;
+    this.books.forEach((book) => {
       this.isChecked[book.bookId] = selectAllChecked;
-      this.checkedProductIds = Object.keys(this.isChecked).filter(id => this.isChecked[id]);
+      this.checkedProductIds = Object.keys(this.isChecked).filter(
+        (id) => this.isChecked[id]
+      );
     });
     this.checkchooseproduct();
-    console.log(this.checkedProductIds)
+    console.log(this.checkedProductIds);
   }
 }
-
-
