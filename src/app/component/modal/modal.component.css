@@ -195,6 +195,7 @@
 
 .error-message {
   color: brown;
+  font-size: small;
 }
 
 .send-otp {

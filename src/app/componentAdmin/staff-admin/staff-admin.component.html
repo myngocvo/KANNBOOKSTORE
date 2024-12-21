@@ -1,11 +1,11 @@
 <div class="staff">
     <div class="form-left">
-       <app-menu></app-menu>
+        <app-menu></app-menu>
     </div>
 
     <div class="form-right">
         <div class="title">
-          QUẢN LÝ CỬA HÀNG
+            QUẢN LÝ CỬA HÀNG
         </div>
         <div class="content">
             <div class="name-content">
@@ -14,16 +14,18 @@
             <hr>
             <div class="search-add">
                 <div class="search-container">
-                    <input type="text"  placeholder="Tìm kiếm..." class="search-input">
+                    <input type="text" placeholder="Tìm kiếm..." class="search-input">
                     <button class="search-btn">
-                        <mat-icon class="search-icon" >search</mat-icon>
+                        <mat-icon class="search-icon">search</mat-icon>
                     </button>
                 </div>
                 <div class="add-delete">
                     <div class="add-container">
-                        <button mat-raised-button class="add-btn" (click)="openAddStaffModal()">+ Thêm nhân viên</button>
+                        <button mat-raised-button class="add-btn" (click)="openAddStaffModal()">+ Thêm nhân
+                            viên</button>
                     </div>
-                    <app-modal-add-staff *ngIf="isAddStaffModalVisible" (closeModalEvent)="isAddStaffModalVisible = false"></app-modal-add-staff>
+                    <app-modal-add-staff *ngIf="isAddStaffModalVisible"
+                        (closeModalEvent)="isAddStaffModalVisible = false"></app-modal-add-staff>
                     <div class="add-container">
                         <button mat-raised-button class="add-btn">Xoá tất cả</button>
                     </div>
@@ -32,7 +34,12 @@
             <table class="info-table">
                 <thead>
                     <tr>
-                        <th><input type="checkbox" (change)="selectAll($event)" [checked]="selectAllChecked"></th>
+                        <th>
+                            <mat-checkbox [checked]="selectAllChecked"
+                                [indeterminate]="selectedStaff.length > 0 && selectedStaff.length < filteredUsers.length"
+                                (change)="selectAll($event)">
+                            </mat-checkbox>
+                        </th>
                         <th>Tên nhân viên</th>
                         <th>Email</th>
                         <th>Số điện thoại</th>
@@ -42,7 +49,11 @@
                 </thead>
                 <tbody>
                     <tr *ngFor="let staff of filteredUsers">
-                        <td><input type="checkbox" (change)="selectStaff($event, staff)" [checked]="selectedStaff.includes(staff)"></td>
+                        <td>
+                            <mat-checkbox (change)="selectStaff($event, staff)"
+                                [checked]="selectedStaff.includes(staff)">
+                            </mat-checkbox>
+                        </td>
                         <td>{{ staff.fullName }}</td>
                         <td>{{ staff.email }}</td>
                         <td>{{ staff.phone }}</td>
@@ -50,12 +61,11 @@
                         <td>
                             <button mat-icon-button (click)="openDeleteModal()"><mat-icon>delete</mat-icon></button>
                         </td>
-                        <app-modal-xoa *ngIf="isDeleteModalVisible" (closeModalEvent)="isDeleteModalVisible = false"></app-modal-xoa>
+                        <app-modal-xoa *ngIf="isDeleteModalVisible"
+                            (closeModalEvent)="isDeleteModalVisible = false"></app-modal-xoa>
                     </tr>
                 </tbody>
             </table>
         </div>
-      </div>
+    </div>
 </div>
-
-

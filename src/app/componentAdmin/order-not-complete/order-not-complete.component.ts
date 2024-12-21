@@ -6,61 +6,76 @@ import { BillsService } from 'src/services/Bills/bills.service';
 @Component({
   selector: 'app-order-not-complete',
   templateUrl: './order-not-complete.component.html',
-  styleUrls: ['./order-not-complete.component.css']
+  styleUrls: ['./order-not-complete.component.css'],
 })
 export class OrderNotCompleteComponent {
-  orderData:BillWithCustomer[]=[];
-  id:string='';
-  Doanhthu:number=0;
-  quantity:number=0;
-  totalproduct:number=0;
-  constructor(private router:Router,
-    private billservice:BillsService)
-  {
-    this.getbillsuccess()
+  orderData: BillWithCustomer[] = [];
+  id: string = '';
+  Doanhthu: number = 0;
+  quantity: number = 0;
+  totalproduct: number = 0;
+  searchTerm: string = ''; //lưu giá trị tìm kiếm
+  filteredOrderData: BillWithCustomer[] = []; // Dữ liệu sau khi được lọc
+  constructor(private router: Router, private billservice: BillsService) {
+    this.getbillsuccess();
   }
-  getbillsuccess()
-  {
+  getbillsuccess() {
     this.billservice.getbillSuccess().subscribe({
-      next: res => {
-        this.orderData=res
+      next: (res) => {
+        this.orderData = res;
+        this.filteredOrderData = [...this.orderData];
       },
-      error: err => {
-        console.log("Lỗi lấy dữ liệu: ", err)
-      }
+      error: (err) => {
+        console.log('Lỗi lấy dữ liệu: ', err);
+      },
     });
   }
   isModalApceptVisible = false;
-  status?:string;
-  statusPayment?:string;
+  status?: string;
+  statusPayment?: string;
 
-  handlestatusChange(event: any,id:string) {
-    const selectedValue = event.target.value;
-    this.id=id
-    this.status=selectedValue
-    if (selectedValue) {
-        this.openModalApcept();
+  searchOrders() {
+    const term = this.searchTerm.trim().toLowerCase();
+    if (term === '') {
+      this.filteredOrderData = [...this.orderData];
     } else {
-        this.isModalApceptVisible = false;
+      this.filteredOrderData = this.orderData.filter((order) => {
+        return (
+          (order.id && order.id.toLowerCase().includes(term)) ||
+          (order.nameCustomer &&
+            order.nameCustomer.toLowerCase().includes(term)) ||
+          (order.status && order.status.toLowerCase().includes(term))
+        );
+      });
     }
- }
- handlepaymentstatusChange(id:string,event: any) {
-   const selectElement = event.target as HTMLSelectElement;
-   const statusPayment = selectElement.value;
-   this.id=id
-   this.statusPayment=statusPayment
-   if (statusPayment!=null) {
-       this.openModalApcept();
-   } else {
-       this.isModalApceptVisible = false;
-   }
- }
- onUpdateSuccess()
- {
-  this.status=undefined
-  this.statusPayment=undefined
-  this.getbillsuccess()
- }
+  }
+
+  handlestatusChange(event: any, id: string) {
+    const selectedValue = event.target.value;
+    this.id = id;
+    this.status = selectedValue;
+    if (selectedValue) {
+      this.openModalApcept();
+    } else {
+      this.isModalApceptVisible = false;
+    }
+  }
+  handlepaymentstatusChange(id: string, event: any) {
+    const selectElement = event.target as HTMLSelectElement;
+    const statusPayment = selectElement.value;
+    this.id = id;
+    this.statusPayment = statusPayment;
+    if (statusPayment != null) {
+      this.openModalApcept();
+    } else {
+      this.isModalApceptVisible = false;
+    }
+  }
+  onUpdateSuccess() {
+    this.status = undefined;
+    this.statusPayment = undefined;
+    this.getbillsuccess();
+  }
   // Hiển thị modal
   openModalApcept() {
     this.isModalApceptVisible = true;
@@ -71,8 +86,8 @@ export class OrderNotCompleteComponent {
   }
 
   sendId(id: string): void {
-   this.router.navigate(['OrderDetail-admin', id]);
- }
+    this.router.navigate(['OrderDetail-admin', id]);
+  }
 
   // exportToExcel(): void {
   //   const worksheet: XLSX.WorkSheet = XLSX.utils.json_to_sheet(this.orderData);

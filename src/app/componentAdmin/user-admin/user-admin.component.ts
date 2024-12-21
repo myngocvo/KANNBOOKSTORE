@@ -1,42 +1,42 @@
 import { Component } from '@angular/core';
 import { Customer } from 'src/interfaces/Customer';
 import { CustomermainService } from 'src/services/customermain/customermain.service';
-import { MailchimpService } from 'src/services/otp/otp.service'
+import { MailchimpService } from 'src/services/otp/otp.service';
 @Component({
   selector: 'app-user-admin',
   templateUrl: './user-admin.component.html',
-  styleUrls: ['./user-admin.component.css']
+  styleUrls: ['./user-admin.component.css'],
 })
 export class UserAdminComponent {
   constructor(
     private customers: CustomermainService,
     private mailchimpService: MailchimpService
   ) {}
-  Customers: Customer[]=[]
-  filterdCustomers: Customer[]=[]
-  customer: any = {}
+  Customers: Customer[] = [];
+  filterdCustomers: Customer[] = [];
+  customer: any = {};
   selectAllChecked = false; // Biến để theo dõi trạng thái chọn tất cả
   selectedCustomers: any[] = []; // Mảng để lưu trữ trạng thái chọn của từng sách
   idCustomerDelete: any;
-  ngOnInit()
-  {
+  ngOnInit() {
     this.customers.Customers().subscribe({
-      next: res => {
-        this.Customers = res
-        this.loadpro(null)
+      next: (res) => {
+        this.Customers = res;
+        this.loadpro(null);
       },
-      error: err => {
-        console.log("Lỗi lấy dữ liệu: ", err)
-      }
+      error: (err) => {
+        console.log('Lỗi lấy dữ liệu: ', err);
+      },
     });
   }
 
   loadpro(searchTerm: string | null) {
     if (searchTerm && searchTerm.trim() !== '') {
       // Filter the books based on the search term
-      this.filterdCustomers = this.Customers.filter(cus =>
-        cus.fullName.toLowerCase().includes(searchTerm.toLowerCase())
-      );
+      this.filterdCustomers = this.Customers.filter((cus) => {
+        const fullName = cus.fullName ? cus.fullName.toLowerCase() : '';
+        return fullName.includes(searchTerm.toLowerCase());
+      });
     } else {
       this.filterdCustomers = this.Customers.slice(0, 25); // Or simply assign this.filteredBooks = this.Books; for all books
     }
@@ -56,7 +56,9 @@ export class UserAdminComponent {
     if (event.target.checked) {
       this.selectedCustomers.push(customer);
     } else {
-      const index = this.selectedCustomers.findIndex((selectedCustomer) => selectedCustomer.id === customer.id);
+      const index = this.selectedCustomers.findIndex(
+        (selectedCustomer) => selectedCustomer.id === customer.id
+      );
       if (index !== -1) {
         this.selectedCustomers.splice(index, 1);
       }
@@ -73,9 +75,9 @@ export class UserAdminComponent {
         link.click();
         window.URL.revokeObjectURL(url);
       },
-      error: err => {
+      error: (err) => {
         console.error('Error:', err);
-      }
+      },
     });
   }
   // Hàm xóa sách
@@ -91,6 +93,5 @@ export class UserAdminComponent {
   // Đóng modal xác nhận xóa
   closeDeleteModal() {
     this.isDeleteModalVisible = false;
-
   }
 }

@@ -16,12 +16,14 @@
             <div class="dropdown" id="dropdown" *ngIf="filteredProducts">
                 <div class="cartegory-right-bottom-item" *ngFor="let product of filteredProducts"
                     (click)="navigateToProduct(product.bookId, product.title, product.quantity || 0)">
-                    <div class="productIMG" >
+                    <div class="productIMG">
                         <img [src]="product.image0">
-
                     </div>
                     <span class=" btn-outline-secondary" placement="bottom" ngbTooltip={{product.title}}>{{
                         product.title }}</span>
+                </div>
+                <div *ngIf="noResultsMessage" class="no-results">
+                    Không tìm thấy kết quả
                 </div>
             </div>
         </div>
@@ -38,8 +40,8 @@
                 <span>Giỏ Hàng</span>
             </button>
             <!-- routerLink="/user" -->
-            <button class="action-item"  (click)="statusLogin()">
-              <mat-icon>account_circle</mat-icon>
+            <button class="action-item" (click)="statusLogin()">
+                <mat-icon>account_circle</mat-icon>
                 <span>Tài Khoản</span>
             </button>
             <app-modal *ngIf="isModalVisible" (closeModalEvent)="isModalVisible = false"></app-modal>

@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule, provideClientHydration } from '@angular/platform-browser';
+import {
+  BrowserModule,
+  provideClientHydration,
+} from '@angular/platform-browser';
 // Thư viện cpn
 import { StarRatingComponent } from './component/star-rating/star-rating.component';
 import { AuthorCardComponent } from './component/author-card/author-card.component';
@@ -46,7 +49,7 @@ import { environment } from './environments/environment';
 import { HeaderComponent } from './component/header/header.component';
 import { FooterComponent } from './component/footer/footer.component';
 import { RatingDecimalComponent } from './component/rating-decimal/rating-decimal.component';
-import { NgxViacepModule } from "@brunoc/ngx-viacep";
+import { NgxViacepModule } from '@brunoc/ngx-viacep';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { CloudinaryModule } from '@cloudinary/ng';
@@ -150,10 +153,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatDialogModule,
     FormsModule,
     NgOtpInputModule,
-    MatSnackBarModule
+    MatSnackBarModule,
   ],
-
   providers: [provideClientHydration()],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -1,10 +1,11 @@
 <div class="topComponent">
   <div class="main">
     <input type="checkbox" id="chk" aria-hidden="true">
-
     <div class="login">
       <form (ngSubmit)="login()">
-        <label for="chk" aria-hidden="true">Đăng nhập</label>
+        <label for="chk" aria-hidden="true"> QUẢN LÝ
+          <br> KANNBOOKSTORE
+        </label>
         <input class="login-input" type="email" name="email" placeholder="Email" [(ngModel)]="DataLogin.email" required>
         <div class="type-password">
           <input class="type-password-input" [type]="showInputPassword ? 'text' : 'password'" name="pswd"
@@ -16,7 +17,7 @@
         <button type="submit">Đăng nhập</button>
       </form>
     </div>
-
+    <!--  -->
     <div class="forgetPass">
       <label for="chk" aria-hidden="true">Quên mật khẩu?</label>
       <form *ngIf="!otpSent && !otpVerified" (ngSubmit)="sendOtp()">

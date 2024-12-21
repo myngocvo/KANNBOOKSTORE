@@ -18,6 +18,8 @@ import { BookDetailsViewModel } from 'src/interfaces/fullbook';
 import { ProductViewService } from 'src/services/ProductView/product-view.service';
 import { ProductReviewBookid } from 'src/interfaces/ProductView';
 import { environment } from 'src/app/environments/environment';
+import { MatSnackBar } from '@angular/material/snack-bar';
+
 declare var FB: any;
 import { Meta, Title } from '@angular/platform-browser';
 @Component({
@@ -78,7 +80,8 @@ export class ProductComponent implements OnInit {
     private title: Title,
     //rating-comment
     config: NgbModalConfig,
-    private modalService: NgbModal
+    private modalService: NgbModal,
+    private snackBar: MatSnackBar
   ) {
     config.backdrop = 'static';
     config.keyboard = false;
@@ -208,11 +211,15 @@ export class ProductComponent implements OnInit {
     };
     this.cartsService.addCarts(dataCart).subscribe({
       next: (res: any[]) => {
-        alert('Thêm vào giỏ hàng thành công');
+        this.snackBar.open('Thêm vào giỏ hàng thành công', 'Đóng', {
+          duration: 3000,
+        });
         this.getproductid();
       },
       error: (err) => {
-        alert('Sản phẩm đã có trong giỏ hàng');
+        this.snackBar.open('Sản phẩm đã có trong giỏ hàng', 'Đóng', {
+          duration: 3000,
+        });
       },
     });
   }

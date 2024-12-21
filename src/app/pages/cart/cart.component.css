@@ -41,7 +41,10 @@
   border-radius: 5px;
 }
 
-.table-1 tbody,th,td,tr {
+.table-1 tbody,
+th,
+td,
+tr {
   width: 17%;
   text-align: center;
 }
@@ -57,7 +60,7 @@ th:first-child {
   width: 8%;
 }
 
-.unitPrice-Price{
+.unitPrice-Price {
   color: #97978D;
   text-decoration: line-through;
 }
@@ -86,14 +89,14 @@ th:first-child {
 
 .btn-pay {
   margin-top: 20px;
-  margin-bottom:30px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
 }
 
 .NO-CART {
   position: relative;
-  flex-direction: column ;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   height: 75vh;
@@ -116,6 +119,14 @@ th:first-child {
 .NO-CART img {
   height: 100px;
   width: 100px;
+}
+
+.NO-CART button {
+  background-color: #dd352e;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
 }
 
 .table-1 tbody tr:nth-child(even) {

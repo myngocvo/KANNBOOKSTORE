@@ -5,43 +5,44 @@ import { Router } from '@angular/router';
 import { Author } from 'src/interfaces/Author';
 import { Category } from 'src/interfaces/Category';
 import { CustomerService } from 'src/services/customer/customer.service';
-import { BookDetailsViewModel } from 'src/interfaces/fullbook'
+import { BookDetailsViewModel } from 'src/interfaces/fullbook';
 import { CategoriesService } from 'src/services/Categories/categories.service';
 import { BooksService } from 'src/services/Books/books.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+  styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent {
   idcustomer: string | null = null;
-  product: any = {}
-  constructor(private http: HttpClient,
+  product: any = {};
+  constructor(
+    private http: HttpClient,
     private router: Router,
     private customer: CustomerService,
     private categoryService: CategoriesService,
-    private serviceBook: BooksService) { }
+    private serviceBook: BooksService,
+    private snackBar: MatSnackBar
+  ) {}
   data: BookDetailsViewModel[] = [];
   bookImage: bookimg[] = [];
   author: Author | null = null;
   filteredProducts: BookDetailsViewModel[] = [];
   categories: Category[] = [];
 
-
   ngOnInit() {
     // Make a GET request to fetch book data
-    this.categoryService.Categories().subscribe(
-      {
-        next: response => {
-          if (response) {
-            this.categories = response;
-          }
-        },
-        error: error => {
-          console.error('Lỗi xảy ra khi lấy dữ liệu thể loại', error);
+    this.categoryService.Categories().subscribe({
+      next: (response) => {
+        if (response) {
+          this.categories = response;
         }
-      });
-
+      },
+      error: (error) => {
+        console.error('Lỗi xảy ra khi lấy dữ liệu thể loại', error);
+      },
+    });
   }
 
   statusLogin() {
@@ -65,28 +66,45 @@ export class HeaderComponent {
     if (token) {
       this.router.navigate(['cart']);
     } else {
-      alert('Vui lòng đăng nhập để xem giỏ hàng')
+      this.snackBar.open('Vui lòng đăng nhập để xem giỏ hàng', 'Đóng', {
+        duration: 3000,
+      });
     }
   }
+  noResultsMessage: boolean = false;
   loadpro(name: string): void {
     this.serviceBook.getBookDetailImages().subscribe({
-      next: response => {
+      next: (response) => {
         if (response) {
           this.data = response;
         }
       },
-      error: error => {
+      error: (error) => {
         console.error('Lỗi xảy ra khi lấy dữ liệu sách', error);
-      }
+      },
     });
     if (name) {
-      (document.querySelector(".dropdown") as HTMLElement).style.display = 'flex';
-      this.filteredProducts = this.data.filter((product) =>
-        product.title.toLowerCase().includes(name.toLowerCase())
-      ).slice(0, 6);
+      this.filteredProducts = this.data
+        .filter((product) =>
+          product.title.toLowerCase().includes(name.toLowerCase())
+        )
+        .slice(0, 6);
+
+      if (this.filteredProducts.length > 0) {
+        this.noResultsMessage = false;
+        (document.querySelector('.dropdown') as HTMLElement).style.display =
+          'flex';
+      } else {
+        this.noResultsMessage = true;
+        (document.querySelector('.dropdown') as HTMLElement).style.display =
+          'flex';
+      }
+    } else {
+      this.noResultsMessage = false;
+      this.filteredProducts = [];
+      (document.querySelector('.dropdown') as HTMLElement).style.display =
+        'none';
     }
-    else
-      (document.querySelector(".dropdown") as HTMLElement).style.display = 'none';
   }
   isModalVisible = false;
 
@@ -103,12 +121,15 @@ export class HeaderComponent {
   }
 
   navigateToProduct(productId: string, productName: string, quality: number) {
-      const sanitizedProductName = productName.replace(/\s+/g, '-');
-      const combined = `${sanitizedProductName}-${productId}`;
-      this.router.navigate(['product', combined]);
+    const sanitizedProductName = productName.replace(/\s+/g, '-');
+    const combined = `${sanitizedProductName}-${productId}`;
+    this.router.navigate(['product', combined]).then(() => {
+      this.filteredProducts = [];
+      (document.querySelector('.dropdown') as HTMLElement).style.display =
+        'none';
+    });
   }
   navigateToCategory(categoryId: string) {
-
     this.router.navigate(['category', categoryId]).then(() => {
       location.reload();
     });
@@ -116,5 +137,4 @@ export class HeaderComponent {
   percent1(price: number, per: number): number {
     return price * (1 - per);
   }
-
 }

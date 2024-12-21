@@ -22,11 +22,10 @@ import { authGuard } from './guards/auth.guard';
 import { adminAuthGuard } from './guards/admin-auth.guard';
 import { staffAuthGuard } from './guards/admin-auth.guard';
 const routes: Routes = [
-
   { path: 'OrderDetail-admin/:id', component: OrderDetailComponent },
   {
     path: 'cart',
-    component: CartComponent
+    component: CartComponent,
   },
   {
     path: 'home',
@@ -41,12 +40,12 @@ const routes: Routes = [
   {
     path: 'user',
     component: UserComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'login',
     component: ModalComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'category',
@@ -65,7 +64,7 @@ const routes: Routes = [
   {
     path: 'payment',
     component: PaymentComponent,
-    canActivate: [authGuard]
+    canActivate: [authGuard],
   },
   {
     path: 'produc/:id',
@@ -77,58 +76,57 @@ const routes: Routes = [
   {
     path: 'them-sach/:bookId',
     component: ThemSachComponent,
-    canActivate: [adminAuthGuard]
+    canActivate: [adminAuthGuard],
   },
   {
     path: 'them-sach',
     component: ThemSachComponent,
-    canActivate: [adminAuthGuard]
+    canActivate: [adminAuthGuard],
   },
   {
     path: 'revenue-admin',
     component: RevenueAdminComponent,
-    canActivate: [adminAuthGuard]
+    canActivate: [adminAuthGuard],
   },
   {
     path: 'order-admin',
     component: OrderAdminComponent,
-    canActivate: [staffAuthGuard]
+    canActivate: [staffAuthGuard],
   },
   {
     path: 'staff-admin',
     component: StaffAdminComponent,
-    canActivate: [adminAuthGuard]
+    canActivate: [adminAuthGuard],
   },
   {
     path: 'user-admin',
     component: UserAdminComponent,
-    canActivate: [adminAuthGuard]
+    canActivate: [adminAuthGuard],
   },
   {
     path: 'voucher-admin',
     component: VoucherAdminComponent,
-    canActivate: [adminAuthGuard]
+    canActivate: [adminAuthGuard],
   },
   {
     path: 'OrderNotComplete-admin',
     component: OrderNotCompleteComponent,
-    canActivate: [staffAuthGuard]
+    canActivate: [staffAuthGuard],
   },
   {
     path: 'comment-admin',
     component: CommentComponent,
-    canActivate: [staffAuthGuard]
+    canActivate: [staffAuthGuard],
   },
-
-]
+];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, {
-    initialNavigation: 'enabledBlocking'
-})],
-  exports: [RouterModule]
+  imports: [
+    RouterModule.forRoot(routes, {
+      scrollPositionRestoration: 'enabled',
+      initialNavigation: 'enabledBlocking',
+    }),
+  ],
+  exports: [RouterModule],
 })
-
-export class AppRoutingModule {
-
-}
+export class AppRoutingModule {}

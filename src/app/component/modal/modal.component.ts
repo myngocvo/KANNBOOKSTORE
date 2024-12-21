@@ -1,4 +1,10 @@
-import { Component, Output, EventEmitter, Renderer2, ElementRef } from '@angular/core';
+import {
+  Component,
+  Output,
+  EventEmitter,
+  Renderer2,
+  ElementRef,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Customer } from '../../../interfaces/Customer';
 import { CustomerService } from 'src/services/customer/customer.service';
@@ -32,10 +38,13 @@ export class ModalComponent {
   constructor(
     private snackBar: MatSnackBar,
     private customermain: CustomermainService,
-    private customer: CustomerService, private router: Router, private el: ElementRef,
-    private renderer: Renderer2, private otpService: OtpService,
+    private customer: CustomerService,
+    private router: Router,
+    private el: ElementRef,
+    private renderer: Renderer2,
+    private otpService: OtpService,
     private sharedata: SharedataService
-  ) { }
+  ) {}
   isInputDisabled: boolean = true;
   isInputDisabledOpt: boolean = true;
   isInputDisabledphone: boolean = false;
@@ -45,25 +54,23 @@ export class ModalComponent {
     if (!CheckPhoneNumber(this.DataRegister.phone)) {
       this.errorMessagePhone = 'Số điện thoại không chính xác!';
     } else {
-      this.customermain.CustomerPhone(this.DataRegister.phone).subscribe(
-        {
-          next: (res) => {
-            if (!this.CheckStatusFormregister) {
-              this.errorMessagePhone = 'Số điên thoại đã được đăng ký'
-            }
-          },
-          error: (err) => {
-            console.log(err)
-            this.checkresgiter = true;
+      this.customermain.CustomerPhone(this.DataRegister.phone).subscribe({
+        next: (res) => {
+          if (!this.CheckStatusFormregister) {
+            this.errorMessagePhone = 'Số điên thoại đã được đăng ký';
           }
-        }
-      );
+        },
+        error: (err) => {
+          console.log(err);
+          this.checkresgiter = true;
+        },
+      });
     }
     if (this.checkresgiter || this.CheckStatusFormregister) {
       const phone = this.DataRegister.phone.substring(1);
       this.otpService.sendOTP(`+84${phone}`).then((result) => {
         this.isInputDisabledOpt = false;
-        this.errorMessagePhone = "Kiễm tra tin nhắn để nhận mã otp"
+        this.errorMessagePhone = 'Kiễm tra tin nhắn để nhận mã otp';
         this.verificationId = result.verificationId;
       });
     }
@@ -71,14 +78,17 @@ export class ModalComponent {
   verifyOTP(event: any) {
     const inputValue = event.target.value;
     if (inputValue.length === 6) {
-      this.otpService.verifyOTP(this.verificationId, inputValue).then((user) => {
-        event.target.value = '';
-        this.isInputDisabled = false;
-        this.isInputDisabledphone = true;
-        this.isInputDisabledOpt = true;
-      }).catch((error) => {
-        console.error('Mã Otp chưa đúng:', error);
-      });
+      this.otpService
+        .verifyOTP(this.verificationId, inputValue)
+        .then((user) => {
+          event.target.value = '';
+          this.isInputDisabled = false;
+          this.isInputDisabledphone = true;
+          this.isInputDisabledOpt = true;
+        })
+        .catch((error) => {
+          console.error('Mã Otp chưa đúng:', error);
+        });
     }
   }
   closeModal(): void {
@@ -99,17 +109,29 @@ export class ModalComponent {
     this.showPasswordConfirm = !this.showPasswordConfirm;
   }
   eyeError() {
-    this.errorPassword = kiemTraMucDoManhMatKhau(this.DataRegister.password)
+    this.errorPassword = kiemTraMucDoManhMatKhau(this.DataRegister.password);
   }
   eyeConfirmError() {
-    if (this.DataRegister.confirmPassword != null || this.DataRegister.confirmPassword != "") {
+    if (
+      this.DataRegister.confirmPassword != null ||
+      this.DataRegister.confirmPassword != ''
+    ) {
       this.passConfirmNull = false;
       this.eyeConfirm = true;
     }
   }
   // ------------------------------------------------------------------//
+  validatePhoneNumber() {
+    const phone = this.DataRegister.phone || '';
+    if (phone.length !== 10 || !/^\d+$/.test(phone)) {
+      this.errorMessagePhone = 'Số điện thoại không đúng';
+    } else {
+      this.errorMessagePhone = '';
+    }
+  }
   register() {
-    const formRegisterElement = this.el.nativeElement.querySelector('#formregister');
+    const formRegisterElement =
+      this.el.nativeElement.querySelector('#formregister');
     const formLogin = this.el.nativeElement.querySelector('#formlogin');
     const datasignup = {
       id: this.DataRegister.phone,
@@ -121,43 +143,49 @@ export class ModalComponent {
     if (!(this.DataRegister.password == this.DataRegister.confirmPassword)) {
       this.errorConfirmPassword = 'Mật khẩu không khớp!';
     } else {
-      this.customer.signUp(datasignup)
-        .subscribe({
-          next: (res => {
-            console.log(res.message);
-            this.DataRegister = {};
-            this.renderer.setStyle(formLogin, 'display', 'block');
-            this.renderer.setStyle(formRegisterElement, 'display', 'none');
-          }),
-          error: (err => {
-            alert("Vui lòng nhập đúng thông tin ")
-          })
-        })
+      this.customer.signUp(datasignup).subscribe({
+        next: (res) => {
+          console.log(res.message);
+          this.DataRegister = {};
+          this.renderer.setStyle(formLogin, 'display', 'block');
+          this.renderer.setStyle(formRegisterElement, 'display', 'none');
+        },
+        error: (err) => {
+          this.snackBar.open('Vui lòng nhập đúng thông tin', 'Đóng', {
+            duration: 3000,
+          });
+        },
+      });
     }
   }
   // -------------------------------------------------------//
   login() {
-    this.customer.signIn(this.Datalogin.phoneLogin, this.Datalogin.passLogin).subscribe(
-      {
-        next: (res => {
+    this.customer
+      .signIn(this.Datalogin.phoneLogin, this.Datalogin.passLogin)
+      .subscribe({
+        next: (res) => {
           this.Datalogin = {};
           this.router.navigate(['user']);
           this.closeModalEvent.emit();
           this.snackBar.open('Đăng nhập thành công', 'Đóng', {
             duration: 3000,
           });
-        }),
-        error: (err => {
-          this.snackBar.open('Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập', 'Đóng', {
-            duration: 3000,
-          });
-        })
-      }
-    )
+        },
+        error: (err) => {
+          this.snackBar.open(
+            'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập',
+            'Đóng',
+            {
+              duration: 3000,
+            }
+          );
+        },
+      });
   }
   ChangPageForget() {
     this.CheckStatusFormregister = true;
-    const formRegisterElement = this.el.nativeElement.querySelector('#formregister');
+    const formRegisterElement =
+      this.el.nativeElement.querySelector('#formregister');
     const btnregister = this.el.nativeElement.querySelector('#btnregister');
     const name = this.el.nativeElement.querySelector('#name');
     const formLogin = this.el.nativeElement.querySelector('#formlogin');
@@ -169,25 +197,30 @@ export class ModalComponent {
     this.renderer.setStyle(btnforget, 'display', 'block');
   }
   Fogetpass() {
-    const formRegisterElement = this.el.nativeElement.querySelector('#formregister');
+    const formRegisterElement =
+      this.el.nativeElement.querySelector('#formregister');
     const formLogin = this.el.nativeElement.querySelector('#formlogin');
-    this.customer.forgerPass(this.DataRegister.phone, this.DataRegister.password).subscribe({
-      next: (res => {
-        this.DataRegister = {};
-        this.renderer.setStyle(formLogin, 'display', 'block');
-        this.renderer.setStyle(formRegisterElement, 'display', 'none');
-      }),
-      error: (err => {
-        alert("Thay đổi mật khẩu không thành công ")
-      })
-    })
+    this.customer
+      .forgerPass(this.DataRegister.phone, this.DataRegister.password)
+      .subscribe({
+        next: (res) => {
+          this.DataRegister = {};
+          this.renderer.setStyle(formLogin, 'display', 'block');
+          this.renderer.setStyle(formRegisterElement, 'display', 'none');
+        },
+        error: (err) => {
+          alert('Thay đổi mật khẩu không thành công ');
+        },
+      });
   }
   FormLoginRegister() {
     this.CheckStatusFormregister = false;
-    const formRegisterElement = this.el.nativeElement.querySelector('#formregister');
+    const formRegisterElement =
+      this.el.nativeElement.querySelector('#formregister');
     const formLogin = this.el.nativeElement.querySelector('#formlogin');
     const btnforget = this.el.nativeElement.querySelector('#btnforget');
-    const formRegisterDisplay = window.getComputedStyle(formRegisterElement).display;
+    const formRegisterDisplay =
+      window.getComputedStyle(formRegisterElement).display;
     const btnregister = this.el.nativeElement.querySelector('#btnregister');
     this.renderer.setStyle(btnregister, 'display', 'block');
     this.renderer.setStyle(btnforget, 'display', 'none');
@@ -203,7 +236,6 @@ export class ModalComponent {
   JustNumber(event: any) {
     event.target.value = event.target.value.replace(/\D/g, '');
   }
-
 }
 
 //---------------------Tạo function--------------------------------//
@@ -215,7 +247,6 @@ function CheckFormatEmail(input: string): boolean {
   const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
   return emailRegex.test(input);
 }
-
 
 function kiemTraMucDoManhMatKhau(matKhau: string): string {
   // Kiểm tra chiều dài
@@ -244,4 +275,3 @@ function kiemTraMucDoManhMatKhau(matKhau: string): string {
   // Nếu vượt qua tất cả các kiểm tra, mật khẩu được coi là mạnh
   return 'Mạnh';
 }
-

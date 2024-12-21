@@ -8,13 +8,13 @@
         <div class="infomation-register">
           <label class="lblhover" for="phone">Số điện thoại</label>
           <div class="form-input" id="sendOtp">
-            <input class="input-register" [disabled]="isInputDisabledphone" style="width: 72%;" type="text"
-              [(ngModel)]="DataRegister.phone" name="phone">
+            <input class="input-register" [disabled]="isInputDisabledphone" type="text" [(ngModel)]="DataRegister.phone"
+              name="phone" (blur)="validatePhoneNumber()" maxlength="10" required>
             <!-- <div class="send-otp" (click)="sendOTP()">Gửi mã otp</div> -->
           </div>
-          <div *ngIf="errorMessagePhone" class="error-message">
+          <mat-error *ngIf="errorMessagePhone" class="error-message">
             {{ errorMessagePhone}}
-          </div>
+          </mat-error>
           <!-- <label class="lblhover" for="otp">Mã Otp</label>
           <div class="form-input"> <input class="input-register" (keyup)="verifyOTP($event)"
               [disabled]="isInputDisabledOpt" autocomplete="false" type="text" [(ngModel)]="DataRegister.otp"
@@ -31,7 +31,7 @@
           <label class="lblhover" for="password">Mật khẩu</label>
           <div class="form-input">
             <input class="input-register" (keyup)="eyeError()" autocomplete="false"
-              [type]="showPassword ? 'text' : 'password'" [(ngModel)]="DataRegister.password" name="password">
+              [type]="showPassword ? 'text' : 'password'" [(ngModel)]="DataRegister.password" name="password" required>
             <mat-icon *ngIf="eye" (click)="togglePasswordVisibility()">
               {{ showPassword ? 'visibility' : 'visibility_off' }}
             </mat-icon>
@@ -39,20 +39,22 @@
           <div *ngIf="errorPassword" class="error-message">
             {{ errorPassword }}
           </div>
+
           <label class="lblhover" for="confirm_password">Xác nhận mật khẩu</label>
           <div class="form-input">
             <input class="input-register" (keyup)="eyeConfirmError()" autocomplete="false"
-              [type]="showPasswordConfirm ? 'text' : 'password'" [(ngModel)]="DataRegister.confirmPassword"
+              [type]="showPasswordConfirm ? 'text' : 'password'" [(ngModel)]="DataRegister.confirmPassword" required
               name="confirm_password">
             <mat-icon *ngIf="eyeConfirm" (click)="togglePasswordConfirmVisibility()">
               {{ showPasswordConfirm ? 'visibility' : 'visibility_off' }}
             </mat-icon>
           </div>
-          <div *ngIf="errorConfirmPassword" class="error-message">
+          <mat-error *ngIf="errorConfirmPassword" class="error-message">
             {{ errorConfirmPassword }}
-          </div>
+          </mat-error>
           <div class="btn-register-div">
-            <button class="btn-register" id="btnregister" (click)="register()">Đăng ký</button>
+            <button class="btn-register" id="btnregister" (click)="register()">Đăng
+              ký</button>
             <button class="btn-register" style="display:none" id="btnforget" (click)="Fogetpass()">Xác nhận</button>
           </div>
         </div>

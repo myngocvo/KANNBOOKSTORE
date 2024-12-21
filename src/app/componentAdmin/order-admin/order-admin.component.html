@@ -13,8 +13,9 @@
       <hr>
       <div class="search-add">
         <div class="search-container">
-          <input type="text" placeholder="Tìm kiếm..." class="search-input">
-          <button class="search-btn">
+          <input type="text" placeholder="Tìm kiếm..." class="search-input" [(ngModel)]="searchTerm"
+            (input)="searchOrders()">
+          <button class="search-btn" (click)="searchOrders()">
             <mat-icon class="search-icon">search</mat-icon>
           </button>
         </div>
@@ -37,7 +38,7 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let order of orderData let i = index">
+          <tr *ngFor="let order of filteredOrderData let i = index">
             <td>{{i+1}}</td>
             <td>{{ order.id }}</td>
             <td>{{ order.nameCustomer}}</td>
@@ -61,7 +62,7 @@
                 [statusPayment]="this.statusPayment" *ngIf="isModalApceptVisible"
                 (closeModalEvent)="isModalApceptVisible = false"></app-modal-apcept>
             </td>
-          <td>{{order.code_pay}}</td>
+            <td>{{order.code_pay}}</td>
             <td>
               <!-- /OrderDetail-admin -->
               <button mat-icon-button (click)="sendId(order.id)"><mat-icon>remove_red_eye</mat-icon></button>
