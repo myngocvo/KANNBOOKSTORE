@@ -168,6 +168,12 @@ export class UserComponent {
   getOrdersByStatus(status: number): ShoppingCartItem[] {
     return this.shopingCart.filter((item) => item.status === status);
   }
+  passwordFieldType: string = 'password';
+  togglePasswordVisibility(): void {
+    this.passwordFieldType =
+      this.passwordFieldType === 'password' ? 'text' : 'password';
+  }
+
   Updatepass() {
     const dataupdate = {
       id: this.getCustomer?.id,
@@ -213,12 +219,18 @@ export class UserComponent {
     }
   }
   Address() {
-    if (this.fulladdress === '') {
+    if (
+      !this.blameaddress.t ||
+      !this.blameaddress.h ||
+      !this.blameaddress.x ||
+      this.fulladdress === ''
+    ) {
       this.snackBar.open('Vui lòng nhập đầy đủ thông tin!', 'Đóng', {
-        duration: 3000,
+        duration: 2000,
       });
       return;
     }
+
     this.idcustomer = this.customer.getClaimValue();
     this.updateAddress();
     const dataupdate = {
@@ -237,12 +249,12 @@ export class UserComponent {
       next: (res) => {
         this.getCustomerID();
         this.snackBar.open('Lưu địa chỉ thành công', 'Đóng', {
-          duration: 22000,
+          duration: 2000,
         });
       },
       error: (err) => {
         this.snackBar.open('Lỗi thay đổi dữ liệu', 'Đóng', {
-          duration: 22000,
+          duration: 2000,
         });
       },
     });

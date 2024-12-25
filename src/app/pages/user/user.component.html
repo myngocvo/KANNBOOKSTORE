@@ -141,19 +141,32 @@
       <div class="content-ChangePassword">
         <p class="style-text-dn">Mật khẩu hiện tại</p>
         <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput type="password" [(ngModel)]="Dataupdatepassword.passwordODL"
-            placeholder="Nhập nhập mật khẩu hiện tại...">
+          <input matInput [type]="passwordFieldType" [(ngModel)]="Dataupdatepassword.passwordODL"
+            placeholder="Nhập nhập mật khẩu hiện tại..." #passwordInput>
+          <button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Toggle password visibility'"
+            [attr.aria-pressed]="passwordFieldType === 'text'">
+            <mat-icon>{{ passwordFieldType === 'password' ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
 
         <p class="style-text">Mật khẩu mới</p>
         <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput type="password" [(ngModel)]="Dataupdatepassword.password" placeholder="Nhập mật khẩu mới...">
+          <input matInput [type]="passwordFieldType" #passwordInput [(ngModel)]="Dataupdatepassword.password"
+            placeholder="Nhập mật khẩu mới...">
+          <button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Toggle password visibility'"
+            [attr.aria-pressed]="passwordFieldType === 'text'">
+            <mat-icon>{{ passwordFieldType === 'password' ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
 
         <p class="style-text">Nhập lại mật khẩu</p>
         <mat-form-field class="full-width-input" appearance="fill">
           <input matInput [(ngModel)]="Dataupdatepassword.passwordconfirm" type="password"
             placeholder="Nhập lại mật khẩu mới...">
+          <button matSuffix (click)="togglePasswordVisibility()" [attr.aria-label]="'Toggle password visibility'"
+            [attr.aria-pressed]="passwordFieldType === 'text'">
+            <mat-icon>{{ passwordFieldType === 'password' ? 'visibility_off' : 'visibility' }}</mat-icon>
+          </button>
         </mat-form-field>
 
         <!-- Nút Lưu -->
