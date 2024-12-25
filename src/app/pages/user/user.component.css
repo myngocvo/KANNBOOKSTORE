@@ -17,7 +17,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 10px; 
+  gap: 10px;
   padding: 5px;
   margin-bottom: 20px;
   background-color: #E9EAEE;
@@ -99,13 +99,12 @@ mat-list {
 
 .edit-button-1 mat-icon {
   margin-left: 5px;
-  margin-bottom: -5px;
   font-size: 17px;
 }
 
 .edit-button-1 p {
   font-size: 12px;
-  margin: 0;
+  margin-bottom: -10px;
 }
 
 .right-user-1 {
@@ -233,6 +232,7 @@ tr>td {
 tr>td:last-child {
   text-align: right;
 }
+
 .content-order-top tr>th:first-child,
 tr>td:first-child {
   text-align: left;

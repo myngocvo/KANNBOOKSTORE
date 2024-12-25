@@ -26,6 +26,7 @@ export class CartComponent {
   checkedProductIds: string[] = [];
   totalProduct: number = 0;
   totalmoney: number = 0;
+  selectAllChecked: boolean = false;
   constructor(
     private router: Router,
     private sharedata: SharedataService,
@@ -41,6 +42,7 @@ export class CartComponent {
     this.idcustomer = this.customer.getClaimValue();
     this.refreshCartData();
   }
+
   checkCartdisplay(check: boolean, idBooks: string[]): void {
     if (check) {
       const bookObservables = idBooks.map((id) =>
@@ -78,6 +80,12 @@ export class CartComponent {
         this.deleteProductPrice(idbook);
         this.deleteCheckedProductIds(idbook);
         this.checkchooseproduct();
+        this.Cartinterface = this.Cartinterface.filter(
+          (item) => item.bookId !== idbook
+        );
+        if (this.Cartinterface.length === 0) {
+          this.checkCart = false;
+        }
         this.refreshCartData();
       },
       error: (er) => {
@@ -102,13 +110,14 @@ export class CartComponent {
     this.cartService.CartsIdCustomer(this.idcustomer).subscribe({
       next: (res) => {
         this.Cartinterface = res;
-        this.checkCart = true;
+        this.checkCart = res.length > 0;
         const idBooksArray: string[] = res.map(
           (cartItem: Cart) => cartItem.bookId
         );
         this.checkCartdisplay(this.checkCart, idBooksArray);
       },
       error: (er) => {
+        this.checkCart = false;
         const Cart = this.el.nativeElement.querySelector('#cart');
         this.renderer.setStyle(Cart, 'display', 'none');
         const CartNone = this.el.nativeElement.querySelector('#cartnone');
@@ -131,8 +140,14 @@ export class CartComponent {
 
   toggleCheckbox(event: any, bookId: string): void {
     this.isChecked[bookId] = event.checked;
+    if (!event.checked) {
+      this.selectAllChecked = false;
+    } else {
+      this.selectAllChecked = this.books.every(
+        (book) => this.isChecked[book.bookId]
+      );
+    }
     this.cdr.detectChanges();
-    // Update the array of checked product IDs
     this.totalProduct = 0;
     this.totalmoney = 0;
     this.checkedProductIds = Object.keys(this.isChecked).filter(
@@ -185,13 +200,19 @@ export class CartComponent {
       alert('Bạn chưa chọn giỏ hàng');
     }
   }
+  updateSelectedProducts(): void {
+    this.checkedProductIds = Object.keys(this.isChecked).filter(
+      (id) => this.isChecked[id]
+    );
+    this.checkchooseproduct();
+  }
 
   selectAll(event: any): void {
-    const selectAllChecked = event.checked;
+    this.selectAllChecked = event.checked;
     this.totalProduct = 0;
     this.totalmoney = 0;
     this.books.forEach((book) => {
-      this.isChecked[book.bookId] = selectAllChecked;
+      this.isChecked[book.bookId] = this.selectAllChecked;
       this.checkedProductIds = Object.keys(this.isChecked).filter(
         (id) => this.isChecked[id]
       );

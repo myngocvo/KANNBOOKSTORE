@@ -4,50 +4,58 @@
     <div class="main-cart">
       <div class="left-cart highlighted-products-section">
         <mat-card class="highlighted-title-card">
-          <mat-card-content style="font-size: 18px; color: #FFF;">THÔNG TIN SẢN PHẨM
+          <mat-card-content style="font-size: 18px; color: #FFF;"> GIỎ HÀNG CỦA TÔI
           </mat-card-content>
         </mat-card>
         <div class="table-1">
-          <tr>
-            <th><mat-checkbox (change)="selectAll($event)"></mat-checkbox></th>
-            <th>Chọn tất cả</th>
-            <th>Tên sách</th>
-            <th>Số lượng</th>
-            <th>Đơn giá</th>
-            <th>Thành tiền</th>
-            <th>Xoá</th>
-          </tr>
-          <tbody>
-            <tr *ngFor="let cart of books ">
-              <td><mat-checkbox (change)="toggleCheckbox($event, cart.bookId)"
-                  [(ngModel)]="isChecked[cart.bookId]"></mat-checkbox></td>
-              <td><img src="{{cart.image0}}" alt=""></td>
-              <td>{{cart.title}}</td>
-              <td>
-                <div class="quantity">
-                  <input type="number" placeholder="1" min="1" max="{{ cart.quantity }}"
-                    [(ngModel)]="quantity[cart.bookId]"
-                    (ngModelChange)="updateQuantity(cart.bookId, quantity[cart.bookId])">
-                </div>
-              </td>
-              <td>
-                <span class="unitPrice-Price"
-                  *ngIf="cart.unitPrice!==percent1(cart.unitPrice, cart.pricePercent)">{{cart.unitPrice}}<sup>đ</sup></span>
-                <span>{{percent1(cart.unitPrice, cart.pricePercent) | number:'1.0-0'}} <sup>đ</sup></span>
-              </td>
-              <td>
-                <span id="itemPriceTotal">{{ ((quantity[cart.bookId] != null ? quantity[cart.bookId] : 1) *
-                  percent1(cart.unitPrice,
-                  cart.pricePercent)) | number:'1.0-0' }}
-                </span>
-              </td>
-              <td>
-                <button class="btn-trash" (click)="deletecart(cart.bookId)">
-                  <mat-icon>delete_forever</mat-icon>
-                </button>
-              </td>
+          <table>
+            <tr>
+              <th>
+                <mat-checkbox [checked]="selectAllChecked"
+                  [indeterminate]="!selectAllChecked && checkedProductIds.length > 0" (change)="selectAll($event)">
+                </mat-checkbox>
+              </th>
+              <th>Chọn tất cả</th>
+              <th>Tên sách</th>
+              <th>Số lượng</th>
+              <th>Đơn giá</th>
+              <th>Thành tiền</th>
+              <th>Xoá</th>
             </tr>
-          </tbody>
+            <tbody>
+              <tr class="book" *ngFor="let cart of books ">
+                <td>
+                  <mat-checkbox (change)="toggleCheckbox($event, cart.bookId)" [(ngModel)]="isChecked[cart.bookId]">
+                  </mat-checkbox>
+                </td>
+                <td><img src="{{cart.image0}}" alt=""></td>
+                <td>{{cart.title}}</td>
+                <td>
+                  <div class="quantity">
+                    <input type="number" placeholder="1" min="1" max="{{ cart.quantity }}"
+                      [(ngModel)]="quantity[cart.bookId]"
+                      (ngModelChange)="updateQuantity(cart.bookId, quantity[cart.bookId])">
+                  </div>
+                </td>
+                <td>
+                  <span class="unitPrice-Price"
+                    *ngIf="cart.unitPrice!==percent1(cart.unitPrice, cart.pricePercent)">{{cart.unitPrice}}<sup>đ</sup></span>
+                  <span>{{percent1(cart.unitPrice, cart.pricePercent) | number:'1.0-0'}} <sup>đ</sup></span>
+                </td>
+                <td>
+                  <span id="itemPriceTotal">{{ ((quantity[cart.bookId] != null ? quantity[cart.bookId] : 1) *
+                    percent1(cart.unitPrice,
+                    cart.pricePercent)) | number:'1.0-0' }}
+                  </span>
+                </td>
+                <td>
+                  <button class="btn-trash" (click)="deletecart(cart.bookId)">
+                    <mat-icon>delete_forever</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
       <div class="right-cart">
@@ -73,9 +81,9 @@
     </div>
   </div>
 </div>
-<div class="NO-CART" id="cartnone">
+<div class="NO-CART" id="cartnone" *ngIf="!checkCart">
   <div class="cart-content">
-    <img src="./assets/no-shopping-cart.png">
+    <img src="./assets/no-shopping-cart.png" alt="No products">
     <p>Chưa có sản phẩm nào trong giỏ hàng của bạn</p>
     <button color="warn" routerLink="/home">MUA SẮM NGAY</button>
   </div>
