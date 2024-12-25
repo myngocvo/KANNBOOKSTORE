@@ -110,22 +110,22 @@
       <div class="content-address">
         <p class="style-text-dn">Tỉnh/Thành phố</p>
         <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Nhập tỉnh/Thành phố" [(ngModel)]="blameaddress.t" (input)="updateAddress()">
+          <input matInput placeholder="Nhập tỉnh/Thành phố" required [(ngModel)]="blameaddress.t"
+            (input)="updateAddress()">
         </mat-form-field>
         <p class="style-text">Quận/Huyện</p>
         <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Nhập tỉnh/Thành phố" [(ngModel)]="blameaddress.h" (input)="updateAddress()">
+          <input matInput placeholder="Nhập Quận/Huyện" required [(ngModel)]="blameaddress.h" (input)="updateAddress()">
         </mat-form-field>
 
         <p class="style-text">Phường/Xã</p>
         <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Nhập tỉnh/Thành phố'" [(ngModel)]="blameaddress.x" (input)="updateAddress()">
+          <input matInput placeholder="Nhập Phường/Xã'" required [(ngModel)]="blameaddress.x" (input)="updateAddress()">
         </mat-form-field>
 
         <p class="style-text">Địa chỉ</p>
         <mat-form-field class="full-width-input">
-          <input type="text" matInput
-            placeholder="{{ detailedAddress ? 'Nhập chi tiết số nhà và đường':this.getCustomer.address }}"
+          <input type="text" matInput [disabled]="true" [placeholder]="detailedAddress ? '':this.getCustomer.address "
             [(ngModel)]="apt" (input)="updateAddress()">
           <span matSuffix style="width: 100px;">{{ detailedAddress }} &nbsp;</span>
         </mat-form-field>

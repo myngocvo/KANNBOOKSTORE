@@ -114,7 +114,12 @@ export class UserComponent {
         if (this.getCustomer) {
           this.getCustomer.birthday;
         }
-        if (res.address === null || res.address === 'string') {
+        console.log(res.address);
+        if (
+          res.address === null ||
+          res.address === 'string' ||
+          res.address === ''
+        ) {
           this.blameaddress.t = 'Nhập tỉnh';
           this.blameaddress.h = 'Nhập huyện';
           this.blameaddress.x = 'Nhập xã';
@@ -208,6 +213,12 @@ export class UserComponent {
     }
   }
   Address() {
+    if (this.fulladdress === '') {
+      this.snackBar.open('Vui lòng nhập đầy đủ thông tin!', 'Đóng', {
+        duration: 3000,
+      });
+      return;
+    }
     this.idcustomer = this.customer.getClaimValue();
     this.updateAddress();
     const dataupdate = {
@@ -226,12 +237,12 @@ export class UserComponent {
       next: (res) => {
         this.getCustomerID();
         this.snackBar.open('Lưu địa chỉ thành công', 'Đóng', {
-          duration: 3000,
+          duration: 22000,
         });
       },
       error: (err) => {
         this.snackBar.open('Lỗi thay đổi dữ liệu', 'Đóng', {
-          duration: 4000,
+          duration: 22000,
         });
       },
     });
