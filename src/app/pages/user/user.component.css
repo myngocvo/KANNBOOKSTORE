@@ -116,7 +116,6 @@ mat-list {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-
 .menu-icon {
   margin-right: 15px;
 }
@@ -131,7 +130,6 @@ mat-list {
   background-color: #97978D;
   border-radius: 12px;
 }
-
 
 .menu-list:hover {
   transform: scale(1.1);
@@ -178,6 +176,13 @@ mat-list {
 
 .content-profile {
   padding: 20px 40px;
+}
+
+.content-profile button {
+  padding: 5px;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .content-address {

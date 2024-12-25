@@ -196,10 +196,13 @@ export class UserComponent {
         },
         error: (err) => {
           console.error('Mật khẩu không đúng ', err);
+          this.snackBar.open('Mật khẩu hiện tại không đúng', 'Đóng', {
+            duration: 3000,
+          });
         },
       });
     } else {
-      this.snackBar.open(' Mật khẩu không khớp ', 'Đóng', {
+      this.snackBar.open('Mật khẩu không khớp', 'Đóng', {
         duration: 3000,
       });
     }
@@ -222,12 +225,12 @@ export class UserComponent {
     this.customerMain.updateCustomer(this.idcustomer, dataupdate).subscribe({
       next: (res) => {
         this.getCustomerID();
-        this.snackBar.open(' Lưu địa chỉ thành công ', 'Đóng', {
+        this.snackBar.open('Lưu địa chỉ thành công', 'Đóng', {
           duration: 3000,
         });
       },
       error: (err) => {
-        this.snackBar.open(' Lỗi thay đổi dữ liệu  ', 'Đóng', {
+        this.snackBar.open('Lỗi thay đổi dữ liệu', 'Đóng', {
           duration: 4000,
         });
       },
@@ -240,7 +243,6 @@ export class UserComponent {
       originalDate.setDate(originalDate.getDate() + 1);
       this.getCustomer.birthday = originalDate;
     }
-    this.idcustomer = this.customer.getClaimValue();
     const dataupdate = {
       id: this.idcustomer,
       fullName: this.getCustomer?.fullName,
@@ -255,13 +257,15 @@ export class UserComponent {
     };
     this.customerMain.updateCustomer(this.idcustomer, dataupdate).subscribe({
       next: (res) => {
-        this.snackBar.open(' Lưu hồ sơ thành công ', 'Đóng', {
-          duration: 3000,
+        const snackBarRef = this.snackBar.open('Lưu hồ sơ thành công', 'Đóng', {
+          duration: 1000,
         });
-        window.location.reload();
+        snackBarRef.afterDismissed().subscribe(() => {
+          window.location.reload();
+        });
       },
       error: (err) => {
-        this.snackBar.open(' Lỗi thay lưu dữ liệu ', 'Đóng', {
+        this.snackBar.open('Lỗi thay lưu dữ liệu', 'Đóng', {
           duration: 4000,
         });
       },

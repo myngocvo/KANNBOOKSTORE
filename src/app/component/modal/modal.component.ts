@@ -151,7 +151,7 @@ export class ModalComponent {
           this.renderer.setStyle(formRegisterElement, 'display', 'none');
         },
         error: (err) => {
-          this.snackBar.open('Vui lòng nhập đúng thông tin', 'Đóng', {
+          this.snackBar.open('Số điện thoại đã được đăng kí', 'Đóng', {
             duration: 3000,
           });
         },
@@ -168,7 +168,7 @@ export class ModalComponent {
           this.router.navigate(['user']);
           this.closeModalEvent.emit();
           this.snackBar.open('Đăng nhập thành công', 'Đóng', {
-            duration: 3000,
+            duration: 800,
           });
         },
         error: (err) => {

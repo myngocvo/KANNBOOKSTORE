@@ -212,13 +212,13 @@ export class ProductComponent implements OnInit {
     this.cartsService.addCarts(dataCart).subscribe({
       next: (res: any[]) => {
         this.snackBar.open('Thêm vào giỏ hàng thành công', 'Đóng', {
-          duration: 3000,
+          duration: 1000,
         });
         this.getproductid();
       },
       error: (err) => {
         this.snackBar.open('Sản phẩm đã có trong giỏ hàng', 'Đóng', {
-          duration: 3000,
+          duration: 1000,
         });
       },
     });

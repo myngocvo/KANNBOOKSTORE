@@ -65,7 +65,7 @@
       <div class="content-profile">
         <p class="style-text-dn">Tên người dùng</p>
         <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Full name" [(ngModel)]="getCustomer.fullName ">
+          <input matInput class="username" placeholder="Tên người dùng" [(ngModel)]="getCustomer.fullName ">
         </mat-form-field>
 
         <p class="style-text">Số điện thoại</p>
@@ -80,9 +80,9 @@
 
         <p class="style-text">Giới tính</p>
         <mat-radio-group class="checkbox radio-spacing" [(ngModel)]="gender">
-          <mat-radio-button value="nam">Nam</mat-radio-button>
-          <mat-radio-button value="nữ">Nữ</mat-radio-button>
-          <mat-radio-button value="khác">Khác</mat-radio-button>
+          <mat-radio-button value="Nam">Nam</mat-radio-button>
+          <mat-radio-button value="Nữ">Nữ</mat-radio-button>
+          <mat-radio-button value="Khác">Khác</mat-radio-button>
         </mat-radio-group>
         <p class="style-text-nn">Ngày sinh</p>
 
@@ -98,7 +98,7 @@
           </mat-datepicker>
         </mat-form-field>
         <!-- Nút Lưu -->
-        <button mat-raised-button class="save-button" (click)="updateprofile()">Lưu</button>
+        <button class="save-button" (click)="updateprofile()">Lưu</button>
       </div>
     </div>
 
