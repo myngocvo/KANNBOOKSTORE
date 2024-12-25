@@ -120,10 +120,10 @@ export class UserComponent {
           res.address === 'string' ||
           res.address === ''
         ) {
-          this.blameaddress.t = 'Nhập tỉnh';
-          this.blameaddress.h = 'Nhập huyện';
-          this.blameaddress.x = 'Nhập xã';
-          this.blameaddress.ap = 'Nhập Ấp';
+          this.blameaddress.t = '';
+          this.blameaddress.h = '';
+          this.blameaddress.x = '';
+          this.blameaddress.ap = '';
         } else {
           this.blameaddress = extractAddressInfo(res.address);
         }
@@ -248,6 +248,21 @@ export class UserComponent {
     });
   }
   updateprofile() {
+    if (!this.getCustomer?.phone || this.getCustomer.phone.trim() === '') {
+      this.snackBar.open('Số điện thoại không được để trống', 'Đóng', {
+        duration: 1000,
+      });
+      return;
+    }
+    if (
+      this.getCustomer.phone.length !== 10 ||
+      !/^\d+$/.test(this.getCustomer.phone)
+    ) {
+      this.snackBar.open('Số điện thoại không hợp lệ', 'Đóng', {
+        duration: 1000,
+      });
+      return;
+    }
     //công thêm 1 ngày
     if (this.getCustomer?.birthday) {
       const originalDate = new Date(this.getCustomer.birthday);

@@ -68,9 +68,9 @@
           <input matInput class="username" placeholder="Tên người dùng" [(ngModel)]="getCustomer.fullName ">
         </mat-form-field>
 
-        <p class="style-text">Số điện thoại</p>
+        <p class="style-text">Số điện thoại nhận hàng</p>
         <mat-form-field class="full-width-input" appearance="fill">
-          <input matInput placeholder="Số điện thoại" [(ngModel)]="getCustomer.phone">
+          <input matInput placeholder="Số điện thoại" required [(ngModel)]="getCustomer.phone">
         </mat-form-field>
 
         <p class="style-text">Email</p>
@@ -118,7 +118,7 @@
           <input matInput placeholder="Nhập Quận/Huyện" required [(ngModel)]="blameaddress.h" (input)="updateAddress()">
         </mat-form-field>
 
-        <p class="style-text">Phường/Xã</p>
+        <p class="style-text">Số đường - Phường/Xã</p>
         <mat-form-field class="full-width-input" appearance="fill">
           <input matInput placeholder="Nhập Phường/Xã'" required [(ngModel)]="blameaddress.x" (input)="updateAddress()">
         </mat-form-field>
@@ -129,7 +129,7 @@
             [(ngModel)]="apt" (input)="updateAddress()">
           <span matSuffix style="width: 100px;">{{ detailedAddress }} &nbsp;</span>
         </mat-form-field>
-        <button mat-raised-button class="save-button" (click)="Address()">Lưu</button>
+        <button class="save-button" (click)="Address()">Lưu</button>
       </div>
     </div>
 
@@ -157,7 +157,7 @@
         </mat-form-field>
 
         <!-- Nút Lưu -->
-        <button mat-raised-button class="save-button" (click)="Updatepass()">Lưu</button>
+        <button class="save-button" (click)="Updatepass()">Lưu</button>
       </div>
     </div>
 
