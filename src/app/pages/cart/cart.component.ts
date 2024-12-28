@@ -9,7 +9,7 @@ import { forkJoin } from 'rxjs';
 import { ChangeDetectorRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
-
+import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-cart',
   templateUrl: './cart.component.html',
@@ -36,7 +36,8 @@ export class CartComponent {
     private customer: CustomerService,
     private bookservice: BooksService,
     private renderer: Renderer2,
-    private title: Title
+    private title: Title,
+    private snackBar: MatSnackBar
   ) {
     this.title.setTitle('Giỏ hàng');
     this.idcustomer = this.customer.getClaimValue();
@@ -197,7 +198,9 @@ export class CartComponent {
         queryParams: { sessionKey: uniqueKey },
       });
     } else {
-      alert('Bạn chưa chọn giỏ hàng');
+      this.snackBar.open('Chọn sản phẩm để tiếp tục mua hàng!', 'Đóng', {
+        duration: 1000,
+      });
     }
   }
   updateSelectedProducts(): void {

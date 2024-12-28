@@ -36,7 +36,7 @@
                         </tr>
                     </thead>
                     <tbody *ngIf="productful">
-                        <tr *ngFor="let book of productful ">
+                        <tr class="book" *ngFor="let book of productful ">
                             <td>
                                 <img class="bookimage" [src]="book.image0" alt="Hình ảnh sách">
                             <td>{{book.title}}</td>
@@ -69,7 +69,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr *ngFor="let book of searchResults">
+                        <tr class="book-search-result" *ngFor="let book of searchResults">
                             <td><img class="bookimage" [src]="book.image0" alt="Hình ảnh sách"></td>
                             <td>{{book.title}}</td>
                             <td>{{book.quantity}}</td>

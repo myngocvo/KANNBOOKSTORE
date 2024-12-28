@@ -39,10 +39,21 @@
                 <mat-icon>bar_chart</mat-icon>
                 <span>Thống kê doanh thu</span>
             </mat-list-item>
-            <mat-list-item (click)="logout()">
+            <mat-list-item (click)="openConfirmDialog()">
                 <mat-icon>logout</mat-icon>
                 <span>Đăng xuất</span>
             </mat-list-item>
+            <!-- form xác nhận -->
+            <ng-template #confirmDialog>
+                <h1 mat-dialog-title>Thông báo xác nhận</h1>
+                <div mat-dialog-content>
+                    <p>Bạn có chắc chắn muốn đăng xuất không?</p>
+                </div>
+                <div mat-dialog-actions>
+                    <button mat-button (click)="onCancel()">Hủy</button>
+                    <button mat-button (click)="logout()">Xác Nhận</button>
+                </div>
+            </ng-template>
         </mat-nav-list>
     </div>
 </div>

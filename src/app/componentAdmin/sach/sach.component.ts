@@ -1,34 +1,47 @@
-import { Component, Input, EventEmitter, Renderer2, ElementRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  EventEmitter,
+  Renderer2,
+  ElementRef,
+} from '@angular/core';
 import { Author } from 'src/interfaces/Author';
 import { BooksService } from 'src/services/Books/books.service';
 import { BookDetailsViewModel } from 'src/interfaces/fullbook';
-import { CloudConfig, Cloudinary, CloudinaryImage, URLConfig } from '@cloudinary/url-gen';
+import {
+  CloudConfig,
+  Cloudinary,
+  CloudinaryImage,
+  URLConfig,
+} from '@cloudinary/url-gen';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-sach',
   templateUrl: './sach.component.html',
-  styleUrls: ['./sach.component.css']
+  styleUrls: ['./sach.component.css'],
 })
 export class SachComponent {
-  constructor(private BookAll: BooksService,
+  constructor(
+    private BookAll: BooksService,
     private router: Router,
     private el: ElementRef,
-    private renderer: Renderer2) { }
-  sizepage = 4;
+    private renderer: Renderer2
+  ) {}
+  sizepage = 5;
   page = 1;
-  book: any = {}
+  book: any = {};
   Authors: Author[] = [];
   selectedBooks: any[] = [];
   productful: BookDetailsViewModel[] = [];
   Books: BookDetailsViewModel[] = [];
   loadedBooksCount: number = 0;
   bookAllNonePage: BookDetailsViewModel[] = [];
-  idbookdelete: string = "";
+  idbookdelete: string = '';
   cloudinaryImages: CloudinaryImage[] = [];
   normalImages: string[] = [];
   ngOnInit() {
-    this.LoadBookPage(1)
-    this.LoadBook()
+    this.LoadBookPage(1);
+    this.LoadBook();
   }
   LoadBookPage(page: number) {
     this.BookAll.getBookHavePreView(page, this.sizepage).subscribe({
@@ -46,10 +59,8 @@ export class SachComponent {
     this.BookAll.getBookDetailImages().subscribe({
       next: (res) => {
         this.bookAllNonePage = res;
-
       },
-      error: (err) => {
-      },
+      error: (err) => {},
     });
   }
   searchResults: any[] = [];
@@ -66,14 +77,14 @@ export class SachComponent {
     }
     // Convert the search query to lowercase for case-insensitive search
     const searchTerm = title.toLowerCase();
-    this.searchResults = this.bookAllNonePage.filter(book =>
+    this.searchResults = this.bookAllNonePage.filter((book) =>
       book.title.toLowerCase().includes(searchTerm)
     );
   }
 
   editBook(bookId: string, productName: string) {
     const sanitizedProductName = productName.replace(/\s+/g, '-');
-    this.router.navigate(['them-sach', bookId])
+    this.router.navigate(['them-sach', bookId]);
   }
   assets: any;
 

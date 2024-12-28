@@ -187,6 +187,7 @@
                 <mat-icon *ngIf="bill.status === 'Đã Xác Nhận'">check_circle</mat-icon> -->
                 <table class="content-order-top">
                   <tr>
+                    <th></th>
                     <th>Sản phẩm</th>
                     <th>Số lượng </th>
                     <th>Thành tiền</th>
@@ -195,6 +196,7 @@
                     <td>
                       <img [src]="detail.bookImage" alt="Product Image">
                     </td>
+                    <td>{{ detail.nameBook}}</td>
                     <td>{{ detail.quantity }}</td>
                     <td>{{ (detail.unitPrice * detail.quantity) | number:'1.0-0'}}<sup>đ</sup></td>
                   </tr>
@@ -238,6 +240,7 @@
               <div class="content-order" *ngFor="let bill of bills">
                 <table class="content-order-top">
                   <tr>
+                    <th></th>
                     <th>Sản phẩm</th>
                     <th>Số lượng </th>
                     <th>Thành tiền</th>
@@ -246,6 +249,7 @@
                     <td>
                       <img [src]="detail.bookImage" alt="Product Image">
                     </td>
+                    <td>{{detail.nameBook}}</td>
                     <td>{{ detail.quantity }}</td>
                     <td>{{ (detail.unitPrice * detail.quantity) | number:'1.0-0'}}<sup>đ</sup></td>
                   </tr>
@@ -272,6 +276,9 @@
                   </tr>
                   <tr *ngIf="bill.code_pay" class="status-payment">
                     <td>Mã giao dịch: {{bill.code_pay}}</td>
+                  </tr>
+                  <tr class="status-payment">
+                    <td>Mã đơn hàng: {{bill.id}}</td>
                   </tr>
                 </table>
               </div>
@@ -283,6 +290,7 @@
               <div class="content-order" *ngFor="let bill of bills">
                 <table class="content-order-top">
                   <tr>
+                    <th></th>
                     <th>Sản phẩm</th>
                     <th>Số lượng </th>
                     <th>Thành tiền</th>
@@ -326,6 +334,9 @@
                   </tr>
                   <tr *ngIf="bill.code_pay" class="status-payment">
                     <td>Mã giao dịch: {{bill.code_pay}}</td>
+                  </tr>
+                  <tr class="status-payment">
+                    <td>Mã đơn hàng: {{bill.id}}</td>
                   </tr>
                 </table>
                 <ng-template #content let-c="close" let-d="dismiss">
@@ -355,6 +366,7 @@
               <div class="content-order" *ngFor="let bill of bills">
                 <table class="content-order-top">
                   <tr>
+                    <th></th>
                     <th>Sản phẩm</th>
                     <th>Số lượng </th>
                     <th>Thành tiền</th>
@@ -393,6 +405,9 @@
                   </tr>
                   <tr *ngIf="bill.code_pay" class="status-payment">
                     <td>Mã giao dịch: {{bill.code_pay}}</td>
+                  </tr>
+                  <tr class="status-payment">
+                    <td>Mã đơn hàng: {{bill.id}}</td>
                   </tr>
                 </table>
               </div>

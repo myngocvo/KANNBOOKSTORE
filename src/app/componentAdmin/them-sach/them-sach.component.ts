@@ -16,18 +16,18 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./them-sach.component.css'],
 })
 export class ThemSachComponent {
-  constructor(private authors: AuthorsService,
+  constructor(
+    private authors: AuthorsService,
     private categories: CategoriesService,
     private suppliers: SupliersService,
     private booksservice: BooksService,
     public dialog: MatDialog,
     private route: ActivatedRoute
-
-  ) { }
+  ) {}
   Authors: Author[] = [];
   Categories: Category[] = [];
   Suppliers: Supplier[] = [];
-  Books: any = {}
+  Books: any = {};
   selectedAuthor: any = {};
   selectedCategory: any = {};
   selectedSupplier: any = {};
@@ -38,66 +38,64 @@ export class ThemSachComponent {
   userImageSrc!: string;
   selectedFiles: File[] = [];
   productId: string | null = null;
-  idAuthorDelete: string = "";
-  idCategoryDelete: string = "";
-  idSupplierDelete: string = "";
+  idAuthorDelete: string = '';
+  idCategoryDelete: string = '';
+  idSupplierDelete: string = '';
 
   ngOnInit() {
     this.loadCategories();
-    this.route.paramMap.subscribe(params => {
+    this.route.paramMap.subscribe((params) => {
       this.productId = params.get('bookId');
       if (this.productId) {
         this.booksservice.getBookDetailsWithImagesid(this.productId).subscribe({
           next: (res) => {
             this.Books = res;
-            this.selectedAuthor = res.authorId
-            this.selectedSupplier = res.supplierid
-            this.selectedCategory = res.catergoryID
+            this.selectedAuthor = res.authorId;
+            this.selectedSupplier = res.supplierid;
+            this.selectedCategory = res.catergoryID;
           },
           error: (err) => {
             console.error('Error fetching data', err);
-          }
+          },
         });
       }
     });
 
-
     this.authors.Authors().subscribe({
       next: (res) => {
-        this.Authors = res
-        console.log(res)
+        this.Authors = res;
+        console.log(res);
       },
       error: (err) => {
-        console.error('Lỗi lấy dữ liệu ', err)
-      }
+        console.error('Lỗi lấy dữ liệu ', err);
+      },
     });
 
     this.suppliers.Suppliers().subscribe({
       next: (res) => {
-        this.Suppliers = res
+        this.Suppliers = res;
       },
       error: (err) => {
-        console.error('Lỗi lấy dữ liệu ', err)
-      }
+        console.error('Lỗi lấy dữ liệu ', err);
+      },
     });
     this.booksservice.countBook().subscribe({
-      next: res => {
+      next: (res) => {
         this.BookCount = 'B' + (res * 1 + 1 * 1);
       },
-      error: err => {
+      error: (err) => {
         console.log('Lỗi lấy dữ liệu: ', err);
-      }
+      },
     });
-
   }
-  loadCategories(){
+  loadCategories() {
     this.categories.Categories().subscribe({
       next: (res: any) => {
-        this.Categories = res; 
+        this.Categories = res;
       },
       error: (err) => {
         console.error('Lỗi lấy dữ liệu', err);
-      }
+      },
     });
   }
   //chọn sách
@@ -107,50 +105,50 @@ export class ThemSachComponent {
 
   onSave() {
     const formData = new FormData();
-      formData.append('id', "");
-      formData.append('title', this.Books.title || "");
-      formData.append('authorId', this.selectedAuthor || "");
-      formData.append('supplierId', this.selectedSupplier || "");
-      formData.append('unitPrice', this.Books.unitPrice || 0);
-      formData.append('pricePercent', this.Books.pricepercent || 0);
-      formData.append('publishYear', this.Books.yearSX || 0);
-      formData.append('available', 'true');
-      formData.append('quantity', this.Books.quantity || 0);
-      formData.append('catergoryID', this.selectedCategory || "");
-      formData.append('dimensions', this.Books.dimensions || "");
-      formData.append('pages', this.Books.pages || 0);
-      formData.append('description', this.Books.description || "");
+    formData.append('id', '');
+    formData.append('title', this.Books.title || '');
+    formData.append('authorId', this.selectedAuthor || '');
+    formData.append('supplierId', this.selectedSupplier || '');
+    formData.append('unitPrice', this.Books.unitPrice || 0);
+    formData.append('pricePercent', this.Books.pricepercent || 0);
+    formData.append('publishYear', this.Books.yearSX || 0);
+    formData.append('available', 'true');
+    formData.append('quantity', this.Books.quantity || 0);
+    formData.append('catergoryID', this.selectedCategory || '');
+    formData.append('dimensions', this.Books.dimensions || '');
+    formData.append('pages', this.Books.pages || 0);
+    formData.append('description', this.Books.description || '');
     // Append images if selectedFiles contains file objects
-      if (this.selectedFiles && this.selectedFiles.length > 0) {
-        for (let i = 1; i <= 4; i++) {
-          if (this.selectedFiles[i]) {
-            formData.append(`image${i - 1}`, this.selectedFiles[i]);
-          }
+    if (this.selectedFiles && this.selectedFiles.length > 0) {
+      for (let i = 1; i <= 4; i++) {
+        if (this.selectedFiles[i]) {
+          formData.append(`image${i - 1}`, this.selectedFiles[i]);
         }
       }
+    }
     if (this.productId) {
       formData.append('id', this.productId);
       this.booksservice.updateBook(formData).subscribe({
         next: (res) => {
-          alert("Thêm thành công");
+          alert('Thêm thành công');
         },
         error: (err) => {
           console.error('Lỗi thêm vào', err);
+          alert('Vui lòng điền đầy đủ thông tin!');
         },
       });
       console.log(formData);
     } else {
-
       this.booksservice.postBook(formData).subscribe({
         next: (res) => {
-          alert("Thêm thành công");
+          alert('Thêm sách thành công!');
         },
         error: (err) => {
           console.error('Lỗi thêm vào', err);
+          alert('Vui lòng điền đầy đủ thông tin!');
         },
       });
     }
-    
   }
 
   isDeleteModal = false;
@@ -190,7 +188,12 @@ export class ThemSachComponent {
   }
 
   // Hiển thị modal xác nhận xóa
-  openDeleteModal(event: MouseEvent, id: any, select: MatSelect, entityType: string) {
+  openDeleteModal(
+    event: MouseEvent,
+    id: any,
+    select: HTMLSelectElement,
+    entityType: string
+  ) {
     event.preventDefault();
     switch (entityType) {
       case 'author':
@@ -206,17 +209,11 @@ export class ThemSachComponent {
         break;
     }
     this.isDeleteModal = true;
-    select.close();
+    //select.close();
   }
-  
 
   // Đóng modal xác nhận xóa
   closeDeleteModal() {
     this.isDeleteModal = false;
   }
 }
-
-
-
-
-

@@ -42,8 +42,8 @@ export class OrderNotCompleteComponent {
       this.filteredOrderData = this.orderData.filter((order) => {
         return (
           (order.id && order.id.toLowerCase().includes(term)) ||
-          (order.nameCustomer &&
-            order.nameCustomer.toLowerCase().includes(term)) ||
+          (order.customerName &&
+            order.customerName.toLowerCase().includes(term)) ||
           (order.status && order.status.toLowerCase().includes(term))
         );
       });

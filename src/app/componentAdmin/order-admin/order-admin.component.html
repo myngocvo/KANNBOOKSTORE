@@ -41,7 +41,7 @@
           <tr *ngFor="let order of filteredOrderData let i = index">
             <td>{{i+1}}</td>
             <td>{{ order.id }}</td>
-            <td>{{ order.nameCustomer}}</td>
+            <td>{{ order.customerName}}</td>
             <td>
               <select [(ngModel)]="order.paymentStatus" (change)="handlepaymentstatusChange(order.id,$event)">
                 <option value="Chưa Thanh Toán">COD</option>

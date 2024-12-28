@@ -197,7 +197,7 @@ export class UserComponent {
           this.customer.update(this.idcustomer, dataupdate).subscribe({
             next: (res) => {
               this.snackBar.open('Thay đổi mật khẩu thành công', 'Đóng', {
-                duration: 3000,
+                duration: 1000,
               });
             },
             error: (err) => {
@@ -208,13 +208,13 @@ export class UserComponent {
         error: (err) => {
           console.error('Mật khẩu không đúng ', err);
           this.snackBar.open('Mật khẩu hiện tại không đúng', 'Đóng', {
-            duration: 3000,
+            duration: 1000,
           });
         },
       });
     } else {
       this.snackBar.open('Mật khẩu không khớp', 'Đóng', {
-        duration: 3000,
+        duration: 1000,
       });
     }
   }
@@ -226,7 +226,7 @@ export class UserComponent {
       this.fulladdress === ''
     ) {
       this.snackBar.open('Vui lòng nhập đầy đủ thông tin!', 'Đóng', {
-        duration: 2000,
+        duration: 1000,
       });
       return;
     }
@@ -249,12 +249,12 @@ export class UserComponent {
       next: (res) => {
         this.getCustomerID();
         this.snackBar.open('Lưu địa chỉ thành công', 'Đóng', {
-          duration: 2000,
+          duration: 1000,
         });
       },
       error: (err) => {
         this.snackBar.open('Lỗi thay đổi dữ liệu', 'Đóng', {
-          duration: 2000,
+          duration: 1000,
         });
       },
     });
@@ -304,7 +304,7 @@ export class UserComponent {
       },
       error: (err) => {
         this.snackBar.open('Lỗi thay lưu dữ liệu', 'Đóng', {
-          duration: 4000,
+          duration: 1000,
         });
       },
     });
@@ -325,7 +325,7 @@ export class UserComponent {
   //       console.log(err);
   //     },
   //   });
-  //   this.totalcart += 20000;
+  //   this.totalcart += 10000;
   // }
   onDateChange(event: any) {
     this.selectedDate = event.value + 1;
@@ -358,13 +358,13 @@ export class UserComponent {
         next: (res: any) => {
           this.StatusBill('Chờ Xác Nhận');
           this.snackBar.open('Đơn hàng đã được hủy thành công!', 'Đóng', {
-            duration: 3000,
+            duration: 1000,
           });
         },
         error: (err: any) => {
           console.error('Lỗi khi hủy đơn hàng:', err);
           this.snackBar.open('Có lỗi xảy ra khi hủy đơn hàng!', 'Đóng', {
-            duration: 4000,
+            duration: 1000,
           });
         },
       });
@@ -385,7 +385,7 @@ export class UserComponent {
     localStorage.removeItem('access_token');
     this.isMessage = 'Bạn có chắc chắn muốn đăng xuất không?';
     this.snackBar.open(' Đăng xuất thành công ', 'Đóng', {
-      duration: 3000,
+      duration: 1000,
     });
     this.router.navigate(['home']);
   }
@@ -409,12 +409,12 @@ export class UserComponent {
       this.productView.addProductReview(dataProductView).subscribe({
         next: (res) => {
           this.snackBar.open(' Cảm ơn bạn đã đánh giá ', 'Đóng', {
-            duration: 3000,
+            duration: 1000,
           });
         },
         error: (err) => {
           this.snackBar.open(' Bạn đã đánh giá sản phẩm này ', 'Đóng', {
-            duration: 3000,
+            duration: 1000,
           });
         },
       });
@@ -489,8 +489,8 @@ export class UserComponent {
               .subscribe({
                 next: () => {
                   window.location.reload();
-                  this.snackBar.open('Upload ảnh thành công!', 'Đóng', {
-                    duration: 3000,
+                  this.snackBar.open('Cập nhật ảnh thành công!', 'Đóng', {
+                    duration: 1000,
                   });
                 },
                 error: (err: any) => {
@@ -537,6 +537,7 @@ export class UserComponent {
     this.billService.getBillStatus(this.idcustomer, status).subscribe({
       next: (res: any[]) => {
         this.bills = res;
+        console.log(this.bills);
         this.sortBills();
         this.loadCommentsStatus();
       },

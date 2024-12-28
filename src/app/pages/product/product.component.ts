@@ -263,6 +263,7 @@ export class ProductComponent implements OnInit {
   onRatingChange(selectedRating: number) {
     this.commemtrating.rating = selectedRating;
   }
+
   payment() {
     if (this.productId) {
       // Nếu chưa có số lượng, gán giá trị mặc định

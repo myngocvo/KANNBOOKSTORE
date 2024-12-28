@@ -176,7 +176,7 @@ export class ModalComponent {
             'Đăng nhập thất bại. Vui lòng kiểm tra lại thông tin đăng nhập',
             'Đóng',
             {
-              duration: 3000,
+              duration: 1000,
             }
           );
         },

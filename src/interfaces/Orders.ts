@@ -7,10 +7,10 @@ export interface Order {
   unitPrice: number;
   quantity: number;
   bookId: string;
-  billId:string;
+  billId: string;
 }
 export interface ShoppingCartItem {
-  status:number,
+  status: number;
   description: string;
   image0: string[];
   title: string[];
@@ -29,7 +29,7 @@ export interface BillWithCustomer {
   status: string;
   code_pay: string | null;
   customerId: string;
-  nameCustomer: string;
+  customerName: string;
   phoneNumber: string;
   orderDate: Date;
   address: string;
@@ -39,4 +39,3 @@ export interface BillWithCustomer {
   bookId: string;
   nameBook: string;
 }
-

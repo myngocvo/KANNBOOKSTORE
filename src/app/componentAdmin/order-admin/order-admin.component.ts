@@ -73,7 +73,7 @@ export class OrderAdminComponent {
     // Lọc dữ liệu với các điều kiện tìm kiếm
     this.filteredOrderData = this.orderData.filter((order) => {
       const id = order.id?.toLowerCase() || ''; // Xử lý trường hợp undefined/null
-      const nameCustomer = order.nameCustomer?.toLowerCase() || '';
+      const nameCustomer = order.customerName?.toLowerCase() || '';
       const status = order.status?.toLowerCase() || '';
 
       return (

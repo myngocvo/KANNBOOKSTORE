@@ -8,7 +8,7 @@
         </div>
         <div class="content" *ngIf="Books">
             <div class="name-content">
-             {{productId?  "Sửa sách": "Thêm sách"}}
+                {{productId? "Sửa sách": "Thêm sách"}}
             </div>
             <hr>
             <!-- Thêm ảnh -->
@@ -47,37 +47,44 @@
                 <div class="author-add">
                     <div class="group-add">
                         <label>Tác giả</label>
-                        <button mat-raised-button (click)="openAddAuthorModal()">+ Thêm tác giả</button>
+                        <button (click)="openAddAuthorModal()">+ Thêm tác giả</button>
                     </div>
-                    <mat-select [(ngModel)]="selectedAuthor" #authorSelect>
+                    <!-- <mat-select [(ngModel)]="selectedAuthor" #authorSelect>
                         <mat-option *ngFor="let author of Authors" [value]="author.id" 
                             (contextmenu)="openDeleteModal($event, author.id ,authorSelect, 'author')">
                             {{ author.name }}
                         </mat-option>
-                    </mat-select>
+                    </mat-select> -->
+                    <select [(ngModel)]="selectedAuthor" #authorSelect>
+                        <option *ngFor="let author of Authors" [value]="author.id"
+                            (contextmenu)="openDeleteModal($event, selectedAuthor, authorSelect, 'author')">
+                            {{ author.name }}
+                        </option>
+                    </select>
+
                 </div>
                 <div class="category-add">
                     <div class="group-add">
                         <label>Thể loại</label>
-                        <button mat-raised-button (click)="openAddCategoryModal()">+ Thêm thể loại</button>
+                        <button (click)="openAddCategoryModal()">+ Thêm thể loại</button>
                     </div>
-                    <mat-select [(ngModel)]="selectedCategory" #categorySelect>
-                        <mat-option *ngFor="let category of Categories" [value]="category.id"
+                    <select [(ngModel)]="selectedCategory" #categorySelect>
+                        <option *ngFor="let category of Categories" [value]="category.id"
                             (contextmenu)="openDeleteModal($event, category.id , categorySelect, 'category')">
                             {{category.name}}
-                        </mat-option>
-                    </mat-select>
+                        </option>
+                    </select>
                 </div>
                 <div class="publish-company">
                     <div class="group-add">
                         <label>Nhà cung cấp</label>
-                        <button mat-raised-button (click)="openAddSuplierModal()">+Thêm nhà cung cấp </button>
+                        <button (click)="openAddSuplierModal()">+ Nhà cung cấp </button>
                     </div>
-                    <mat-select [(ngModel)]="selectedSupplier" #categorySelect>
-                        <mat-option *ngFor="let supplier of Suppliers" [value]="supplier.id"
-                        (contextmenu)="openDeleteModal($event, supplier.id , categorySelect, 'supplier')">
-                        {{supplier.name}}</mat-option>
-                    </mat-select>
+                    <select [(ngModel)]="selectedSupplier" #supplierSelect>
+                        <option *ngFor="let supplier of Suppliers" [value]="supplier.id"
+                            (contextmenu)="openDeleteModal($event, supplier.id , supplierSelect, 'supplier')">
+                            {{supplier.name}}</option>
+                    </select>
                 </div>
             </div>
 
@@ -107,10 +114,10 @@
                 </div>
                 <div class="status">
                     <label>Trạng thái</label>
-                    <mat-select [(ngModel)]="Books.available">
-                        <mat-option [value]="true">Còn bán</mat-option>
-                        <mat-option [value]="false">Ngưng bán</mat-option>
-                    </mat-select>
+                    <select [(ngModel)]="Books.available">
+                        <option [value]="true">Còn bán</option>
+                        <option [value]="false">Ngưng bán</option>
+                    </select>
                 </div>
             </div>
 
@@ -121,20 +128,15 @@
             </div>
             <!-- Nút Hủy và Áp dụng -->
             <div class="btn-cancel-apply">
-                <button mat-raised-button routerLink="/admin">Hủy</button>
-                <button mat-raised-button (click)="onSave()">Xác nhận</button>
+                <button routerLink="/admin">Hủy</button>
+                <button (click)="onSave()">Xác nhận</button>
                 <app-add-category *ngIf="isAddCategoryModal"
                     (closeModalEvent)="isAddCategoryModal = false"></app-add-category>
                 <app-add-author *ngIf="isAddAuthorModal" (closeModalEvent)="closeAddAuthorModal()"></app-add-author>
                 <app-add-suplier *ngIf="isAddSuplierModal"
                     (closeModalEvent)="isAddSuplierModal = false"></app-add-suplier>
-                <app-modal-xoa
-                [idAuthor]="this.idAuthorDelete"
-                [idCategory]="this.idCategoryDelete"
-                [idSupplier]="this.idSupplierDelete"
-                
-                *ngIf="isDeleteModal"
-                (closeModalEvent)="closeDeleteModal()">
+                <app-modal-xoa [idAuthor]="this.idAuthorDelete" [idCategory]="this.idCategoryDelete"
+                    [idSupplier]="this.idSupplierDelete" *ngIf="isDeleteModal" (closeModalEvent)="closeDeleteModal()">
                 </app-modal-xoa>
             </div>
         </div>
