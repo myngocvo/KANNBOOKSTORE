@@ -9,7 +9,7 @@
           <label class="lblhover" for="phone">Số điện thoại</label>
           <div class="form-input" id="sendOtp">
             <input class="input-register" [disabled]="isInputDisabledphone" type="text" [(ngModel)]="DataRegister.phone"
-              name="phone" (blur)="validatePhoneNumber()" maxlength="10" required>
+              name="phone" maxlength="10" required>
             <!-- <div class="send-otp" (click)="sendOTP()">Gửi mã otp</div> -->
           </div>
           <mat-error *ngIf="errorMessagePhone" class="error-message">

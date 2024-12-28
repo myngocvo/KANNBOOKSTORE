@@ -121,18 +121,22 @@ export class ModalComponent {
     }
   }
   // ------------------------------------------------------------------//
-  validatePhoneNumber() {
-    const phone = this.DataRegister.phone || '';
-    if (phone.length !== 10 || !/^\d+$/.test(phone)) {
-      this.errorMessagePhone = 'Số điện thoại không đúng';
-    } else {
-      this.errorMessagePhone = '';
-    }
-  }
+
   register() {
     const formRegisterElement =
       this.el.nativeElement.querySelector('#formregister');
     const formLogin = this.el.nativeElement.querySelector('#formlogin');
+    if (
+      !this.DataRegister.username ||
+      !this.DataRegister.phone ||
+      !this.DataRegister.password ||
+      !this.DataRegister.confirmPassword
+    ) {
+      this.snackBar.open('Vui lòng nhập đầy đủ thông tin!', 'Đóng', {
+        duration: 1000,
+      });
+      return;
+    }
     const datasignup = {
       id: this.DataRegister.phone,
       fullName: this.DataRegister.username,
@@ -140,8 +144,18 @@ export class ModalComponent {
       password: this.DataRegister.password,
       phone: this.DataRegister.phone,
     };
+
+    const phone = this.DataRegister.phone || '';
+    if (phone.length !== 10 || !/^\d+$/.test(phone) || !phone.startsWith('0')) {
+      this.snackBar.open('Số điện thoại không hợp lệ!', 'Đóng', {
+        duration: 1000,
+      });
+      return;
+    }
+
     if (!(this.DataRegister.password == this.DataRegister.confirmPassword)) {
       this.errorConfirmPassword = 'Mật khẩu không khớp!';
+      return;
     } else {
       this.customer.signUp(datasignup).subscribe({
         next: (res) => {
@@ -149,11 +163,31 @@ export class ModalComponent {
           this.DataRegister = {};
           this.renderer.setStyle(formLogin, 'display', 'block');
           this.renderer.setStyle(formRegisterElement, 'display', 'none');
+          this.snackBar.open('Đăng ký thành công!', 'Đóng', {
+            duration: 1000,
+          });
         },
         error: (err) => {
-          this.snackBar.open('Số điện thoại đã được đăng kí', 'Đóng', {
-            duration: 3000,
-          });
+          if (err.error && err.error.message) {
+            const errorMessage = err.error.message;
+            if (errorMessage.includes('đã được đăng kí')) {
+              this.snackBar.open('Số điện thoại đã được đăng kí!', 'Đóng', {
+                duration: 1000,
+              });
+            } else {
+              this.snackBar.open('Đã xảy ra lỗi, vui lòng thử lại!', 'Đóng', {
+                duration: 1000,
+              });
+            }
+          } else {
+            this.snackBar.open(
+              'Lỗi kết nối máy chủ, vui lòng thử lại!',
+              'Đóng',
+              {
+                duration: 1000,
+              }
+            );
+          }
         },
       });
     }
