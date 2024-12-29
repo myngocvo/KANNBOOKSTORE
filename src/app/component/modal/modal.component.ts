@@ -170,8 +170,8 @@ export class ModalComponent {
         error: (err) => {
           if (err.error && err.error.message) {
             const errorMessage = err.error.message;
-            if (errorMessage.includes('đã được đăng kí')) {
-              this.snackBar.open('Số điện thoại đã được đăng kí!', 'Đóng', {
+            if (errorMessage.includes('đã được đăng ký')) {
+              this.snackBar.open('Số điện thoại đã được đăng ký!', 'Đóng', {
                 duration: 1000,
               });
             } else {
